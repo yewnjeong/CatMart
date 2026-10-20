@@ -1,0 +1,17 @@
+Unity_Textures - 유니티로 가져갈 텍스처 (에셋별 폴더)
+
+폴더 이름 = 블렌더 에셋 이름. FBX를 넣을 때 같은 이름 폴더의 텍스처를 입히면 돼요.
+
+재질(URP/Lit)에 넣는 곳
+  *_BaseColor.png  -> Base Map
+  *_Normal.png     -> Normal Map (텍스처 Texture Type을 Normal map으로)
+  Text_*, Panel_*, Start.png, EXIT.png -> 글씨/간판. Base Map에 넣고 Alpha Clipping 켜기
+  GlowStar, StarLamp, Star1 -> 빛나게 하려면 Emission 켜고 BaseColor를 Emission Map에도
+
+참고
+  - Roughness, Metallic은 URP/Lit에 칸이 없어서 뺐어요. Smoothness 값만 조절하세요.
+  - 색 보정 전 원래 색이에요. 유니티 Global Volume > Color Adjustments로 맞추세요.
+  - 크기는 Tex_Opt와 같아요(512~1024). Tex_Opt에 없던 11개는 원본에서 1024로 줄여 넣었어요.
+  - Stone 폴더는 Normal만 있어요(색은 재질 색으로).
+  - 검정 고양이, 흰 고양이는 텍스처 없이 재질 색만 써요.
+  - 섬 바닥(Island), 민트 봉투(Mint Bag)도 텍스처 없이 재질 색만 써요.
