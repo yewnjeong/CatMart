@@ -3,7 +3,12 @@ guid: ed3505e8e5741ae4f9c41ce0ebac78f1
 ModelImporter:
   serializedVersion: 24600
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: URPLab_Baked_Croissant
+    second: {fileID: 2100000, guid: be56dcc204f298f46a49c3f6c1ac881a, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

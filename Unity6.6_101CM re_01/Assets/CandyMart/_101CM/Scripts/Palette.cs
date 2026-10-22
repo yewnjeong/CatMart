@@ -81,14 +81,11 @@ public static class Palette
     public static Color KittenColorFor(FoodType type)
     {
         Color[] set; int slot;
-        switch (type)
+        switch (Food.GroupOf(type))
         {
-            case FoodType.Toast:
-            case FoodType.Croissant: set = BreadPastels; slot = 0; break;
-            case FoodType.Cookie:
-            case FoodType.Candy: set = SnackPastels; slot = 1; break;
-            case FoodType.Apple:
-            case FoodType.Orange: set = FruitPastels; slot = 2; break;
+            case FoodGroup.Bread: set = BreadPastels; slot = 0; break;
+            case FoodGroup.Snack: set = SnackPastels; slot = 1; break;
+            case FoodGroup.Fruit: set = FruitPastels; slot = 2; break;
             default: return RandomKittenColor();   // 마지막 조각 등 분류 없는 음식
         }
         int i = Random.Range(0, set.Length);

@@ -3,7 +3,12 @@ guid: 3eaa853daae4e6744a70b2fee52aab99
 ModelImporter:
   serializedVersion: 24600
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: URPLab_Baked_Pudding
+    second: {fileID: 2100000, guid: f75d9b5f716cc784da3fc7d56f2f9e9e, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

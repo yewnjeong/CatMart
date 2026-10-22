@@ -3,7 +3,12 @@ guid: ad59369024d3e42498113daa2ee1bb1b
 ModelImporter:
   serializedVersion: 24600
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: URPLab_Baked_Apple_F
+    second: {fileID: 2100000, guid: 9b4378ffe8c600946a48c9dffc5e9b04, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

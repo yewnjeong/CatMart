@@ -37,7 +37,7 @@ public class FruitCart : MonoBehaviour
 
         for (int i = 0; i < fruitCount; i++)
         {
-            var t = i % 2 == 0 ? FoodType.Apple : FoodType.Orange;
+            var t = Food.FruitTypes[i % Food.FruitTypes.Length];
             Vector3 spawn = transform.position + Vector3.up * 1.5f + Random.insideUnitSphere * 0.3f;
             var f = Food.Create(t, spawn, gm.foodRoot, true);
             var rb = f.GetComponent<Rigidbody>();

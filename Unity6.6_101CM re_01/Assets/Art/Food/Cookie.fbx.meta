@@ -3,7 +3,12 @@ guid: ba59b5b7e9c09c44da1dcbf610d85d87
 ModelImporter:
   serializedVersion: 24600
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: URPLab_Baked_Chocolate Cookie.001
+    second: {fileID: 2100000, guid: f1c7658c3fb43444c8fe99d66ff97ef0, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

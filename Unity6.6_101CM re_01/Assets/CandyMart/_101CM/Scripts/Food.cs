@@ -1,7 +1,10 @@
 using System.Collections;
 using UnityEngine;
 
-public enum FoodType { Toast, Croissant, Cookie, Candy, Apple, Orange, LastPiece }
+// 새 종류는 끝에 추가 (씬/프리팹에 숫자로 저장되므로 기존 순서를 바꾸지 않는다)
+public enum FoodType { Toast, Croissant, Cookie, Candy, Apple, Orange, LastPiece, Baguette, Lemon, Pear, Pudding }
+
+public enum FoodGroup { None, Bread, Snack, Fruit }
 
 /// <summary>
 /// 수집 음식. physical=false: 진열대 위에 떠서 회전 / physical=true: 굴러다니는 음식(상자·수레에서 쏟아짐).
@@ -25,14 +28,46 @@ public class Food : MonoBehaviour
         switch (t)
         {
             case FoodType.Toast:
-            case FoodType.Croissant: return 5;
+            case FoodType.Croissant:
+            case FoodType.Baguette: return 5;
             case FoodType.Cookie:
-            case FoodType.Candy: return 4;
+            case FoodType.Candy:
+            case FoodType.Pudding: return 4;
             case FoodType.Apple:
-            case FoodType.Orange: return 6;
+            case FoodType.Orange:
+            case FoodType.Lemon:
+            case FoodType.Pear: return 6;
             case FoodType.LastPiece: return 1;
         }
         return 3;
+    }
+
+    public static FoodGroup GroupOf(FoodType t)
+    {
+        switch (t)
+        {
+            case FoodType.Toast:
+            case FoodType.Croissant:
+            case FoodType.Baguette: return FoodGroup.Bread;
+            case FoodType.Cookie:
+            case FoodType.Candy:
+            case FoodType.Pudding: return FoodGroup.Snack;
+            case FoodType.Apple:
+            case FoodType.Orange:
+            case FoodType.Lemon:
+            case FoodType.Pear: return FoodGroup.Fruit;
+        }
+        return FoodGroup.None;
+    }
+
+    public static readonly FoodType[] BreadTypes = { FoodType.Toast, FoodType.Croissant, FoodType.Baguette };
+    public static readonly FoodType[] SnackTypes = { FoodType.Cookie, FoodType.Candy, FoodType.Pudding };
+    public static readonly FoodType[] FruitTypes = { FoodType.Apple, FoodType.Lemon, FoodType.Pear };
+
+    public static FoodType RandomOf(FoodGroup g)
+    {
+        var set = g == FoodGroup.Bread ? BreadTypes : g == FoodGroup.Snack ? SnackTypes : FruitTypes;
+        return set[Random.Range(0, set.Length)];
     }
 
     void OnEnable() => All.Add(this);
@@ -59,6 +94,40 @@ public class Food : MonoBehaviour
     {
         spawnTime = Time.time;
         phase = Random.value * 10f;
+    }
+
+    void Start()
+    {
+        // 씬에 직접 배치한 음식: 미리 만들어 둔 Model 자식을 그대로 쓰고, 없으면 지금 만든다.
+        if (model) return;
+        model = transform.Find("Model");
+        if (!model) RebuildModel();
+        if (!physical && !GetComponent<SphereCollider>())
+        {
+            var tc = gameObject.AddComponent<SphereCollider>();
+            tc.isTrigger = true;
+            tc.radius = 0.9f;
+            tc.center = new Vector3(0f, 0.35f, 0f);
+        }
+    }
+
+    /// <summary>종류를 바꾸고 모델을 다시 만든다 (위치는 그대로).</summary>
+    public void SetType(FoodType t)
+    {
+        type = t;
+        cm = DefaultCm(t);
+        name = t.ToString();
+        RebuildModel();
+    }
+
+    void RebuildModel()
+    {
+        var old = transform.Find("Model");
+        if (old) { old.gameObject.SetActive(false); Destroy(old.gameObject); }
+        model = new GameObject("Model").transform;
+        model.SetParent(transform, false);
+        if (!physical) model.localPosition = new Vector3(0f, 0.35f, 0f);
+        BuildModel(type, model);
     }
 
     public static Food Create(FoodType t, Vector3 worldPos, Transform parent = null, bool physical = false)
@@ -109,7 +178,60 @@ public class Food : MonoBehaviour
         return f;
     }
 
-    static float BuildModel(FoodType t, Transform m)
+    /// <summary>모델을 m 아래에 만들고 대략적인 반지름을 돌려준다. 아트가 등록된 종류는 아트 모델을 쓴다.</summary>
+    public static float BuildModel(FoodType t, Transform m)
+    {
+        var lib = FoodArtLibrary.Instance;
+        var art = lib ? lib.Find(t) : null;
+        if (art != null) return BuildArt(art, m);
+        return BuildPrimitive(t, m);
+    }
+
+    static float BuildArt(FoodArtLibrary.Entry e, Transform m)
+    {
+        var g = Instantiate(e.prefab, m, false);
+        g.name = e.prefab.name;
+        g.transform.localRotation = Quaternion.Euler(e.euler) * g.transform.localRotation;
+        foreach (var c in g.GetComponentsInChildren<Collider>(true)) DestroyCollider(c);
+
+        // 가장 긴 변을 size에 맞추고, 중심을 피벗으로
+        var rs = g.GetComponentsInChildren<Renderer>();
+        if (rs.Length == 0) return e.size * 0.5f;
+        Bounds b = LocalBounds(rs, m);
+        float longest = Mathf.Max(b.size.x, Mathf.Max(b.size.y, b.size.z));
+        float k = longest > 0.0001f ? e.size / longest : 1f;
+        g.transform.localScale *= k;
+        g.transform.localPosition = (g.transform.localPosition - b.center) * k;
+        return e.size * 0.5f;
+    }
+
+    static Bounds LocalBounds(Renderer[] rs, Transform space)
+    {
+        bool first = true;
+        Bounds lb = default;
+        foreach (var r in rs)
+        {
+            var mf = r.GetComponent<MeshFilter>();
+            if (!mf || !mf.sharedMesh) continue;
+            var mb = mf.sharedMesh.bounds;
+            for (int i = 0; i < 8; i++)
+            {
+                var c = new Vector3((i & 1) == 0 ? mb.min.x : mb.max.x, (i & 2) == 0 ? mb.min.y : mb.max.y, (i & 4) == 0 ? mb.min.z : mb.max.z);
+                var p = space.InverseTransformPoint(r.transform.TransformPoint(c));
+                if (first) { lb = new Bounds(p, Vector3.zero); first = false; }
+                else lb.Encapsulate(p);
+            }
+        }
+        return lb;
+    }
+
+    static void DestroyCollider(Collider c)
+    {
+        if (Application.isPlaying) Destroy(c);
+        else DestroyImmediate(c);
+    }
+
+    static float BuildPrimitive(FoodType t, Transform m)
     {
         var dark = new Color(0.35f, 0.2f, 0.12f);
         var green = new Color(0.45f, 0.78f, 0.4f);

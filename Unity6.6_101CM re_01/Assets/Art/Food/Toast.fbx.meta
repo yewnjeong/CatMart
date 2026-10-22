@@ -3,7 +3,12 @@ guid: d46689c8b3ad7be428101b8c05aa8bb0
 ModelImporter:
   serializedVersion: 24600
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: URPLab_Baked_Toast
+    second: {fileID: 2100000, guid: 6a609a1ec3f52e4489637588a2c8b243, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

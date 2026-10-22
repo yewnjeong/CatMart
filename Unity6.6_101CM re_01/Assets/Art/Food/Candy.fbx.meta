@@ -3,7 +3,12 @@ guid: cf93a0a964a3fbf4d8b38f6ed478c594
 ModelImporter:
   serializedVersion: 24600
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: URPLab_Baked_Candy.001
+    second: {fileID: 2100000, guid: a5c3af0e5d9d15748bf21f3bd161efe1, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
