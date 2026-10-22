@@ -140,6 +140,7 @@ public class Food : MonoBehaviour
         f.type = t;
         f.cm = DefaultCm(t);
         f.physical = physical;
+        f.home = worldPos;
 
         var model = new GameObject("Model").transform;
         model.SetParent(go.transform, false);
@@ -296,6 +297,32 @@ public class Food : MonoBehaviour
             }
         }
         return 0.25f;
+    }
+
+    /// <summary>굴러다니는 음식이 이 높이보다 아래로 떨어지면 섬 밖으로 나간 것으로 보고 쏟아진 자리로 되돌린다.</summary>
+    public const float FallResetY = -2f;
+    /// <summary>멈춘 채 이 높이보다 위에 있으면(지붕·높은 장식 위) 손이 닿지 않으니 되돌린다.</summary>
+    public const float PerchResetY = 2.5f;
+    Vector3 home;
+    float perchTime;
+
+    void FixedUpdate()
+    {
+        if (!physical || eaten) return;
+        var rb = GetComponent<Rigidbody>();
+        if (!rb) return;
+        float y = transform.position.y;
+        bool resting = rb.linearVelocity.sqrMagnitude < 0.04f;
+        perchTime = y > PerchResetY && resting ? perchTime + Time.fixedDeltaTime : 0f;
+        if (y > FallResetY && perchTime < 1f) return;
+
+        // 쏟아진 자리 근처로 되돌린다. cm 총량이 줄지 않게 음식은 없애지 않는다.
+        Vector2 r = Random.insideUnitCircle * 0.5f;
+        rb.position = home + new Vector3(r.x, 0f, r.y);
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        perchTime = 0f;
+        PopIn();
     }
 
     void Update()
