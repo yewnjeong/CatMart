@@ -86,7 +86,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - Vector1_52f73ae59de64471be9dd10f8c7a5fb7: 0
+    - Vector1_52f73ae59de64471be9dd10f8c7a5fb7: 2
     - _AddPrecomputedVelocity: 0
     - _AlphaClip: 0
     - _AlphaToMask: 0
@@ -120,7 +120,7 @@ Material:
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _Speed: 0
+    - _Speed: 2
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
@@ -128,7 +128,7 @@ Material:
     - _XRMotionVectorsPass: 1
     - _ZWrite: 1
     m_Colors:
-    - Color_59f6d793bd6d40138a672788ce32dcb7: {r: 1.5096359, g: 12.400306, b: 13.914903, a: 1}
+    - Color_59f6d793bd6d40138a672788ce32dcb7: {r: 2.0412955, g: 3.2713249, b: 9.207547, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
