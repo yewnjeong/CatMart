@@ -13719,6 +13719,7 @@ Transform:
   - {fileID: 297826}
   - {fileID: 768210972}
   - {fileID: 643881273}
+  - {fileID: 1519935788}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &982548837
@@ -21446,6 +21447,80 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1519677414}
   m_Mesh: {fileID: -2603993511243780361, guid: 9116659b516fc364a9422ee896289917, type: 3}
+--- !u!1 &1519935787
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1519935788}
+  - component: {fileID: 1519935790}
+  - component: {fileID: 1519935789}
+  m_Layer: 0
+  m_Name: Bread Frame
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1519935788
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1519935787}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.11158608, y: -0.7700771, z: 0.14753994, w: 0.6105423}
+  m_LocalPosition: {x: -9.386, y: 0.971, z: -2.574}
+  m_LocalScale: {x: 1.0538279, y: 0.9664314, z: 0.16119483}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 981482443}
+  m_LocalEulerAnglesHint: {x: 21.315, y: -103.087, z: 0.51}
+--- !u!114 &1519935789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1519935787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13a19b19d15a81d458143ae70f7efbd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DecalScaler
+--- !u!114 &1519935790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1519935787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0777d029ed3dffa4692f417d4aba19ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.DecalProjector
+  m_Material: {fileID: 2100000, guid: ac634cdabbbddbc4885ca83484c2249d, type: 2}
+  m_DrawDistance: 1000
+  m_FadeScale: 0.9
+  m_StartAngleFade: 180
+  m_EndAngleFade: 180
+  m_UVScale: {x: 1, y: 1}
+  m_UVBias: {x: 0, y: 0}
+  m_RenderingLayerMask:
+    serializedVersion: 0
+    m_Bits: 1
+  m_ScaleMode: 0
+  m_Offset: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.0538279, y: 0.9664314, z: 0.16119483}
+  m_FadeFactor: 1
+  m_VisibleInScene: 1
+  version: 1
+  m_DecalLayerMask: 1
 --- !u!64 &1521126399
 MeshCollider:
   m_ObjectHideFlags: 0
