@@ -110,3 +110,6 @@ InitTestScene*.unity*
 
 # Unity build output
 /101CM game/
+
+# Separate skybox source project (needed assets copied into Assets/BeautifulSky)
+/Unity6.6_101CM re_01/New Unity Project/
