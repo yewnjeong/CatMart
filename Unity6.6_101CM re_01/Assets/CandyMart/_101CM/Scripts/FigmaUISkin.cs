@@ -7,8 +7,9 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "101CM/Figma UI Skin")]
 public class FigmaUISkin : ScriptableObject
 {
-    public Font titleFont;     // Fredoka Bold  (CM 숫자)
-    public Font bodyFont;      // Jua           (한글 안내)
+    public Font titleFont;     // Fredoka Bold      (CM 숫자)
+    public Font enFont;        // Fredoka SemiBold  (영어 안내 문구)
+    public Font bodyFont;      // Jua               (한글 안내 문구)
     public Sprite[] sprites;
 
     public Sprite Get(string spriteName)
