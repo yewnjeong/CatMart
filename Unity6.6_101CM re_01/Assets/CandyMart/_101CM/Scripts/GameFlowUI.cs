@@ -31,8 +31,10 @@ public class GameFlowUI : MonoBehaviour
     // 씬에 예전 배율 값(0.5, 1436px 시안 기준)이 저장돼 있어 필드 이름을 바꿈 — 아래 기본값부터 시작
     [Tooltip("Figma 시안 크기(718px 게이지) 대비 배율. 1 = 시안 그대로")]
     public float hudSize = 1.15f;
-    [Tooltip("시안 위치에서 HUD를 더 내리는 거리, px")]
-    public float hudOffset = 0f;
+    [Tooltip("화면 위 끝에서 고양이 귀 끝까지 거리, px (1920x1080 기준). 배율과 상관없이 유지")]
+    public float hudTopMargin = 16f;
+
+    const float EarTipY = 41f;   // 시안에서 HUD 귀 끝의 y (H_Ears)
 
     static readonly Color Brown = new Color32(0x8A, 0x5A, 0x4E, 0xFF);
     static readonly Color DarkBrown = new Color32(0x6E, 0x4A, 0x40, 0xFF);
@@ -247,7 +249,7 @@ public class GameFlowUI : MonoBehaviour
         hrt.SetParent(root, false);
         hrt.anchorMin = hrt.anchorMax = hrt.pivot = new Vector2(0.5f, 1f);
         hrt.sizeDelta = new Vector2(1920f, 1080f);
-        hrt.anchoredPosition = new Vector2(0f, -hudOffset);
+        hrt.anchoredPosition = new Vector2(0f, EarTipY * hudSize - hudTopMargin);   // 귀 끝이 화면 위에서 hudTopMargin 떨어지게
         hrt.localScale = new Vector3(hudSize, hudSize, 1f);
 
         Spr("GaugeBG", hrt, "H_GaugeBG");
