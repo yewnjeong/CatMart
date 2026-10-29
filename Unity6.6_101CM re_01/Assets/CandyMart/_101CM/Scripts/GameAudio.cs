@@ -14,6 +14,21 @@ public class GameAudio : MonoBehaviour
     public float sfxVolume = 0.8f;
     public float fadeTime = 0.8f;
 
+    // 설정 화면 슬라이더 값 (0~1, PlayerPrefs에 저장 — 다음 실행에도 유지)
+    const string BgmKey = "101CM_BgmVolume", SfxKey = "101CM_SfxVolume";
+    public static float BgmVolume
+    {
+        get => I ? I.bgmVolume : PlayerPrefs.GetFloat(BgmKey, 0.5f);
+        set { if (I) I.bgmVolume = value; PlayerPrefs.SetFloat(BgmKey, value); }
+    }
+    public static float SfxVolume
+    {
+        get => I ? I.sfxVolume : PlayerPrefs.GetFloat(SfxKey, 0.8f);
+        set { if (I) I.sfxVolume = value; PlayerPrefs.SetFloat(SfxKey, value); }
+    }
+    /// <summary>슬라이더를 놓았을 때 디스크에 저장.</summary>
+    public static void SaveVolumes() => PlayerPrefs.Save();
+
     enum Phase { None, Title, Play, Ending }
 
     AudioClip[][] bgm;          // Phase 순서대로 (Title, Play, Ending)
@@ -39,6 +54,8 @@ public class GameAudio : MonoBehaviour
     void Awake()
     {
         I = this;
+        bgmVolume = PlayerPrefs.GetFloat(BgmKey, bgmVolume);
+        sfxVolume = PlayerPrefs.GetFloat(SfxKey, sfxVolume);
         bgm = new[]
         {
             Load("BGM_Title_1", "BGM_Title_2"),
@@ -81,7 +98,10 @@ public class GameAudio : MonoBehaviour
         for (int i = 0; i < 2; i++)
         {
             float target = i == cur ? bgmVolume : 0f;
-            music[i].volume = Mathf.MoveTowards(music[i].volume, target, step * bgmVolume);
+            // 페이드 중이 아니면(크로스페이드 끝) 슬라이더 값이 바로 들리게 즉시 맞춤
+            music[i].volume = i == cur && Mathf.Abs(music[1 - cur].volume) < 0.001f
+                ? target
+                : Mathf.MoveTowards(music[i].volume, target, step);
             if (i != cur && music[i].isPlaying && music[i].volume <= 0f) music[i].Stop();
         }
 
@@ -116,6 +136,36 @@ public class GameAudio : MonoBehaviour
     {
         if (!I || !I.uiClick) return;
         I.uiSfx.PlayOneShot(I.uiClick, I.sfxVolume);
+    }
+
+    // 게임 이벤트 효과음 (Resources/Sound/SFX_<이름>)
+    public static void Jump() => PlaySfx("Jump", 0.55f, 0.08f);
+    public static void Scatter() => PlaySfx("Scatter", 0.9f, 0.05f);
+    public static void Rejoin() => PlaySfx("Rejoin", 0.8f, 0.04f);
+    public static void LastAppear() => PlaySfx("LastAppear", 1f, 0f);
+    public static void ExitOpen() => PlaySfx("ExitOpen", 1f, 0f);
+
+    readonly System.Collections.Generic.Dictionary<string, AudioClip> sfxCache = new System.Collections.Generic.Dictionary<string, AudioClip>();
+    AudioSource fxSfx;
+
+    /// <summary>volume = sfxVolume 대비 배율, pitchJitter = 매번 음높이를 ±만큼 랜덤 (반복음이 덜 거슬리게).</summary>
+    static void PlaySfx(string name, float volume, float pitchJitter)
+    {
+        if (!I) return;
+        if (!I.sfxCache.TryGetValue(name, out var clip))
+            I.sfxCache[name] = clip = Resources.Load<AudioClip>("Sound/SFX_" + name);
+        if (!clip) return;
+        if (!I.fxSfx) { I.fxSfx = I.gameObject.AddComponent<AudioSource>(); I.fxSfx.playOnAwake = false; }
+        // PlayOneShot은 소스의 pitch를 따르므로 음높이가 다른 소리는 잠깐 쓰는 소스로
+        if (pitchJitter > 0f)
+        {
+            var src = I.gameObject.AddComponent<AudioSource>();
+            src.playOnAwake = false;
+            src.pitch = 1f + Random.Range(-pitchJitter, pitchJitter);
+            src.PlayOneShot(clip, I.sfxVolume * volume);
+            Destroy(src, clip.length / src.pitch + 0.1f);
+        }
+        else I.fxSfx.PlayOneShot(clip, I.sfxVolume * volume);
     }
 
     public static void Eat()

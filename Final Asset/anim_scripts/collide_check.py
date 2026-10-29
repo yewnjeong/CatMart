@@ -74,9 +74,14 @@ def check(scene_name, tag, end, cat_r=0.2, step=2, ignore=(), moving_carts=False
                     _, mi, (lo, hi), top, s = fp
                     if z > top - 0.05:      # standing on top of it
                         continue
-                    p = mi @ Vector((x, y, z + 0.1))
-                    r = cat_r / max(1e-6, min(abs(s.x), abs(s.y)))
-                    if lo.x - r < p.x < hi.x + r and lo.y - r < p.y < hi.y + r:
+                    r = cat_r / max(1e-6, min(abs(s.x), abs(s.y), abs(s.z)))
+                    inside = False
+                    for zz in (z + 0.1, z + 0.3, z + 0.5):
+                        p = mi @ Vector((x, y, zz))
+                        if all(lo[i] - r < p[i] < hi[i] + r for i in range(3)):
+                            inside = True
+                            break
+                    if inside:
                         hits.append((f, w, o.get("src", o.name)))
     comp = []
     for f, w, n in hits:

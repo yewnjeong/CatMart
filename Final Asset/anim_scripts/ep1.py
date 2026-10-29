@@ -4,6 +4,7 @@ spec = importlib.util.spec_from_file_location("catlib", P); L = importlib.util.m
 
 END = 4500
 E = L.Episode("EP1_TownTour", "EP1")
+L.park_carts_at(E, {"Cart_A": (-3.07, -1.84), "Cart_B": (0.2, 3.57)})
 t = E.track("Black", (-3.3, -9.45), 2.75)
 K = {}
 
@@ -16,14 +17,14 @@ K["gate"] = t.walk([(-2.3, -7.0), (-1.9, -6.0)], speed=0.8)
 t.turn((-2.28, -6.99), 16)
 K["cheer0"] = t.act("cheer", 54)
 # 3. broom
-t.turn((-0.3, -5.5), 12)
-t.walk([(-0.3, -5.5)], speed=0.9)
+t.turn((-0.65, -5.65), 12)
+t.walk([(-0.65, -5.65)], speed=0.9)
 t.turn((0.44, -5.22), 12)
 K["broom"] = t.act("sniff", 85)
 K["sneeze"] = t.act("surprise", 40)
 t.act("shake", 34)
 # 4. flower garden
-t.walk([(-1.6, -4.9), (-2.75, -4.55)], speed=0.9)
+t.walk([(-1.6, -4.95), (-2.45, -4.8)], speed=0.9)
 t.turn((-3.8, -3.7), 14)
 K["garden"] = t.act("sniff", 95)
 t.idle(60, look=[(0, -0.5), (30, 0.35)])
@@ -46,20 +47,23 @@ t.turn((-4.6, 0.95), 12)
 K["food"] = t.act("sniff", 75)
 t.act("shake", 40)
 # 7. up on the brown box for a look around
-K["toBox"] = t.walk([(-3.0, 2.3), (-2.2, 3.3), (-1.0, 3.75), (-0.8, 3.95)], speed=1.0)
+K["toBox"] = t.walk([(-3.0, 2.3), (-2.0, 3.0), (-1.0, 3.65), (-0.75, 3.92)], speed=1.0)
 t.turn((-0.78, 4.54), 10)
 box_h = E.surf("Brown Box_Low.001", -0.78, 4.54) or 0.58
-K["boxJump"] = t.jump((-0.78, 4.52), h=0.45, base_to=box_h)
+K["boxJump"] = t.jump((-0.74, 4.46), h=0.45, base_to=box_h)
 t.turn(-0.6, 16)
 K["boxSit"] = t.sit(170, "swing", look=[(0, -0.7), (60, 0.6), (120, 0.0)])
 t.idle(20)
-t.jump((-0.15, 3.85), h=0.3)
+K["boxDown"] = t.jump((-0.2, 4.3), h=0.3)
+t.act("surprise", 40)
+t.turn((-0.92, 4.92), 10)
+t.act("scratch", 45)
 # 8. lollipop + snack mart
-t.walk([(0.4, 4.3)], speed=0.9)
+t.walk([(0.55, 4.65)], speed=0.9)
 t.turn((1.0, 5.4), 12)
 K["lolli"] = t.idle(60, look=[(0, 0.3), (30, -0.3)])
 t.act("point", 50)
-K["toSnack"] = t.walk([(1.6, 3.0), (2.2, 2.35)], speed=1.0)
+K["toSnack"] = t.walk([(1.55, 3.85), (2.2, 2.35)], speed=1.0)
 t.turn((3.0, 3.3), 12)
 K["snack"] = t.act("cheer", 60)
 t.act("wave", 66)
@@ -118,11 +122,14 @@ C.follow(f["home"], f["sitEnd"] + 60, "Black", off=(0.2, -2.4, 0.9), aim_off=(0,
 C.move(f["sitEnd"] + 61, END, (0.35, -4.2, 0.75), (2.0, -17.0, 9.0), (0.35, -2.55, 0.45), (0.0, -1.0, 0.8), 45, 30)
 C.bake(E.cam, E.aim, END, "EP1")
 
+L.exit_bars(E)
 E.bake(END)
+L.topple(E, "Green Box_Low.002", K["boxDown"] + 30, (-0.6, 0.8))
 
 # ---------------------------------------------------------------- morning light
 sc = E.sc
 sc.world = L.gradient_world("W_EP1_Morning", (0.22, 0.50, 1.0), (1.0, 0.70, 0.80), (0.62, 0.50, 0.78), 1.15)
+L.unity_sky(sc.world)   # camera sees the Unity skybox panorama
 L.grade(E)
 sun = E.M["Sun_Key"]
 sun.data.color = (1.0, 0.84, 0.66)

@@ -22,6 +22,7 @@ public class ExitGate : MonoBehaviour
             foreach (var r in glowRenderers)
                 if (r) r.sharedMaterial = Palette.Get(new Color(1f, 0.85f, 0.35f), 2f);
         CameraFollow.Shake(0.2f);
+        GameAudio.ExitOpen();
         StartCoroutine(Lower());
     }
 

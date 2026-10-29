@@ -45,7 +45,7 @@ public class GameFlowUI : MonoBehaviour
     // 시작 화면 배경은 0.75, 게임 설명(02-2~4) 배경은 0.55 불투명 → 흰색 0.27을 덮어 맞춤
     static readonly Color TitleFade = new Color(1f, 1f, 1f, 0.267f);
 
-    GameObject titleRoot, hudRoot, menuRoot, guideRoot, clearRoot;
+    GameObject titleRoot, hudRoot, menuRoot, guideRoot, clearRoot, settingsRoot;
     RectTransform gaugeMask;
     Text cmText, catText, clearTime;
     float shownProgress;
@@ -55,6 +55,11 @@ public class GameFlowUI : MonoBehaviour
     struct LocText { public Text text; public string ko, en; public bool enFredoka; }
     readonly List<LocText> locs = new List<LocText>();
     Image langToggle, clearBubble;
+
+    // 설정 (03-5)
+    Image settingsLang;
+    VolumeSlider bgmSlider, sfxSlider;
+    Text bgmValue, sfxValue;
 
     // 게임 설명
     Image guideDim, guideFade;
@@ -93,7 +98,7 @@ public class GameFlowUI : MonoBehaviour
         }
 
         hudRoot.SetActive(!gm.OnTitle && !gm.IsWon);
-        bool menuOn = gm.MenuOpen && !guideRoot.activeSelf;
+        bool menuOn = gm.MenuOpen && !guideRoot.activeSelf && !settingsRoot.activeSelf;
         if (gm.MenuOpen && !lastMenuOpen) SetMenuFocus(0);   // Esc로 새로 열 때만 RESUME부터 (게임 설명에서 돌아올 땐 유지)
         lastMenuOpen = gm.MenuOpen;
         menuRoot.SetActive(menuOn);
@@ -134,12 +139,33 @@ public class GameFlowUI : MonoBehaviour
         guideRoot.SetActive(true);
     }
 
-    /// <summary>Esc·닫기 버튼·바깥 클릭. 게임 설명이 열려 있었으면 닫고 true.</summary>
+    /// <summary>Esc·닫기 버튼·바깥 클릭. 게임 설명이나 설정이 열려 있었으면 닫고 true.</summary>
     public bool CloseGuide()
     {
+        if (settingsRoot && settingsRoot.activeSelf) { CloseSettings(); return true; }
         if (!guideRoot || !guideRoot.activeSelf) return false;
         guideRoot.SetActive(false);
         return true;
+    }
+
+    void OpenSettings()
+    {
+        bgmSlider.SetValue(GameAudio.BgmVolume);
+        sfxSlider.SetValue(GameAudio.SfxVolume);
+        UpdateVolumeTexts();
+        settingsRoot.SetActive(true);
+    }
+
+    void CloseSettings()
+    {
+        settingsRoot.SetActive(false);
+        GameAudio.SaveVolumes();
+    }
+
+    void UpdateVolumeTexts()
+    {
+        bgmValue.text = Mathf.RoundToInt(bgmSlider.Value * 100f) + "%";
+        sfxValue.text = Mathf.RoundToInt(sfxSlider.Value * 100f) + "%";
     }
 
     void ShowPage(int p)
@@ -185,6 +211,8 @@ public class GameFlowUI : MonoBehaviour
             l.text.font = en && l.enFredoka ? skin.enFont : skin.bodyFont;
         }
         langToggle.sprite = skin.Get(en ? "T_LangENG" : "T_LangKOR");
+        settingsLang.sprite = skin.Get(en ? "S_LangENG" : "S_LangKOR");
+        bgmValue.font = sfxValue.font = en ? skin.enFont : skin.bodyFont;
         // 클리어 말풍선: EN은 글자가 길어 더 넓은 풍선, 글자 중심도 오른쪽으로 25px
         clearBubble.sprite = skin.Get(en ? "C_BubbleEN" : "C_BubbleKO");
         PlaceSprite(clearBubble.rectTransform, en ? "C_BubbleEN" : "C_BubbleKO");
@@ -237,6 +265,7 @@ public class GameFlowUI : MonoBehaviour
         BuildTitle(root);
         BuildClear(root);
         BuildGuide(root);   // 시작 화면·메뉴 위에 뜨므로 마지막
+        BuildSettings(root);
         ApplyLanguage();
     }
 
@@ -283,19 +312,21 @@ public class GameFlowUI : MonoBehaviour
         MenuButton(1, d, "Retry", OnRetry);
         MenuButton(2, d, "HowTo", OpenGuide);
         MenuButton(3, d, "Home", OnHome);
+        MenuButton(4, d, "Settings", OpenSettings);
         SetMenuFocus(0);
         menuRoot.SetActive(false);
     }
 
     // 메뉴 버튼: 마우스가 올라간 버튼만 핑크(Primary), 나머지는 크림(Secondary). 열 때마다 RESUME부터.
-    readonly Image[] menuImg = new Image[4];
-    readonly string[] menuKey = new string[4];
+    const int MenuCount = 5;
+    const float MenuY0 = 427f, MenuStep = 86f, MenuH = 72f;   // 시안의 버튼 칸: x 700, y 427 + 86*i, 520x72
+    readonly Image[] menuImg = new Image[MenuCount];
+    readonly string[] menuKey = new string[MenuCount];
     bool lastMenuOpen;
 
     void MenuButton(int i, RectTransform d, string key, UnityEngine.Events.UnityAction onClick)
     {
-        // 시안의 버튼 칸: x 700, y 431 + 106*i, 520x88
-        var slotRect = new Rect(700f, 431f + 106f * i, 520f, 88f);
+        var slotRect = new Rect(700f, MenuY0 + MenuStep * i, 520f, MenuH);
         var slot = new GameObject(key, typeof(RectTransform), typeof(Image));
         var srt = (RectTransform)slot.transform;
         srt.SetParent(d, false);
@@ -318,13 +349,13 @@ public class GameFlowUI : MonoBehaviour
 
     void SetMenuFocus(int focus)
     {
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < MenuCount; i++)
         {
             string name = $"M_Btn{menuKey[i]}{(i == focus ? "On" : "Off")}";
             menuImg[i].sprite = skin.Get(name);
             var r = FigmaUILayout.Rects[name];
-            float slotY = 431f + 106f * i;
-            Place(menuImg[i].rectTransform, r.x - 700f, r.y - slotY, r.width, r.height, 520f, 88f);
+            float slotY = MenuY0 + MenuStep * i;
+            Place(menuImg[i].rectTransform, r.x - 700f, r.y - slotY, r.width, r.height, 520f, MenuH);
         }
     }
 
@@ -417,6 +448,93 @@ public class GameFlowUI : MonoBehaviour
         guideRoot.SetActive(false);
     }
 
+    // ===== 03-5 설정 (Esc 메뉴 SETTINGS) =====
+    const float SliderX = 843f, SliderW = 278f, SliderY0 = 537.5f, RowStep = 82f;   // 시안 슬라이더 트랙: 843, 537.5(+82), 278x20
+
+    void BuildSettings(Transform root)
+    {
+        settingsRoot = FullScreen("Settings", root);
+        Dim(settingsRoot.transform, CloseSettings).color = DimPlay;   // 바깥 클릭으로도 닫힘
+        var d = Design("Design", settingsRoot.transform);
+        Spr("Panel", d, "S_Panel").raycastTarget = true;   // 패널 클릭은 닫기로 안 넘어가게
+        Btn("Close", d, "G_Close", CloseSettings);
+
+        var header = Loc(Label("Header", d, skin.bodyFont, 32, Brown, 0f, 0f, 400f, 44f), "사운드", "Sound");
+        header.alignment = TextAnchor.MiddleLeft;
+        Place(header.rectTransform, 718f, 373f, 400f, 44f);
+
+        RowLabel("BgmLabel", d, 528.5f, "배경음악", "Music");
+        RowLabel("SfxLabel", d, 610.5f, "효과음", "Effects");
+        RowLabel("LangLabel", d, 707f, "언어", "Language");
+
+        bgmSlider = MakeSlider("Bgm", d, 0, v => { GameAudio.BgmVolume = v; UpdateVolumeTexts(); });
+        sfxSlider = MakeSlider("Sfx", d, 1, v => { GameAudio.SfxVolume = v; UpdateVolumeTexts(); });
+        bgmValue = ValueLabel("BgmValue", d, 530f);
+        sfxValue = ValueLabel("SfxValue", d, 612f);
+        sfxSlider.onReleased = () => GameAudio.Eat();   // 놓으면 바뀐 효과음 크기로 한 번 들려줌
+
+        // 언어 토글: 시작 화면과 같은 방식 (왼쪽 반 KOR / 오른쪽 반 ENG)
+        settingsLang = Spr("LangToggle", d, "S_LangKOR");
+        const float lx = 843f, ly = 692.5f, lw = 233f, lh = 67f;
+        HitArea("KOR", d, lx, ly, lw * 0.5f, lh, () => SetLanguage(false));
+        HitArea("ENG", d, lx + lw * 0.5f, ly, lw * 0.5f, lh, () => SetLanguage(true));
+
+        settingsRoot.SetActive(false);
+    }
+
+    void RowLabel(string name, RectTransform d, float y, string ko, string en)
+    {
+        var t = Loc(Label(name, d, skin.bodyFont, 30, Brown, 0f, 0f, 140f, 38f), ko, en);
+        t.alignment = TextAnchor.MiddleLeft;
+        Place(t.rectTransform, 699f, y, 140f, 38f);
+    }
+
+    Text ValueLabel(string name, RectTransform d, float y)
+    {
+        var t = Label(name, d, skin.bodyFont, 28, Brown, 0f, 0f, 90f, 35f);
+        t.alignment = TextAnchor.MiddleRight;
+        Place(t.rectTransform, 1221f - 90f, y, 90f, 35f);
+        return t;
+    }
+
+    /// <summary>row 0 = 배경음악, 1 = 효과음. 스프라이트는 첫 줄 위치로 구워져 있어 row만큼 아래로 옮긴다.</summary>
+    VolumeSlider MakeSlider(string name, RectTransform d, int row, System.Action<float> onChanged)
+    {
+        float dy = RowStep * row, y = SliderY0 + dy;
+        var track = Spr(name + "Track", d, "S_Track");
+        track.rectTransform.anchoredPosition -= new Vector2(0f, dy);
+
+        // 채움: 트랙 왼쪽 끝 기준 마스크 폭 = 값 (HUD 게이지와 같은 방식)
+        var maskGo = new GameObject(name + "FillMask", typeof(RectTransform), typeof(RectMask2D));
+        var mask = (RectTransform)maskGo.transform;
+        mask.SetParent(d, false);
+        mask.anchorMin = mask.anchorMax = new Vector2(0.5f, 0.5f);
+        mask.pivot = new Vector2(0f, 0.5f);
+        mask.anchoredPosition = new Vector2(SliderX - 960f, 540f - (y + 10f));
+        mask.sizeDelta = new Vector2(0f, 40f);
+        var fill = Spr(name + "Fill", mask, "S_Fill");
+        var fr = FigmaUILayout.Rects["S_Fill"];
+        var frt = fill.rectTransform;
+        frt.anchorMin = frt.anchorMax = frt.pivot = new Vector2(0f, 0.5f);
+        frt.anchoredPosition = new Vector2(fr.x - SliderX, (SliderY0 + 10f) - (fr.y + fr.height * 0.5f));
+
+        var knob = Spr(name + "Knob", d, "S_Knob");
+        knob.rectTransform.anchoredPosition -= new Vector2(0f, dy);
+
+        // 누르고 끄는 영역 (트랙 폭 그대로, 위아래로 넉넉히)
+        var hit = new GameObject(name + "Slider", typeof(RectTransform), typeof(Image));
+        var hrt = (RectTransform)hit.transform;
+        hrt.SetParent(d, false);
+        Place(hrt, SliderX, y - 14f, SliderW, 48f);
+        hit.GetComponent<Image>().color = Color.clear;
+        var s = hit.AddComponent<VolumeSlider>();
+        s.track = hrt;
+        s.fillMask = mask;
+        s.knob = knob.rectTransform;
+        s.onChanged = onChanged;
+        return s;
+    }
+
     // ===== 04 클리어 =====
     void BuildClear(Transform root)
     {
@@ -472,6 +590,8 @@ public class GameFlowUI : MonoBehaviour
         guideRoot.SetActive(false);
         if (screen.StartsWith("guide")) OpenGuide();
         clearRoot.SetActive(screen == "clear");
+        settingsRoot.SetActive(false);
+        if (screen == "settings") OpenSettings();
         if (guideRoot.activeSelf) ShowPage(guidePage);
         int cm = Mathf.RoundToInt(progress * GameManager.Goal);
         gaugeMask.sizeDelta = new Vector2(718f * progress, gaugeMask.sizeDelta.y);

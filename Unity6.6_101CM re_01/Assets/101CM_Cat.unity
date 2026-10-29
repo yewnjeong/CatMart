@@ -8220,7 +8220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 604fb7aa22cb1a340a4fd1bdbbc9bf38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodSpawner
-  randomizeTypes: 0
+  randomizeTypes: 1
   useSpawnPoints: 0
   breadCount: 4
   snackCount: 4

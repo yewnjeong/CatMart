@@ -5,7 +5,7 @@ spec = importlib.util.spec_from_file_location("catlib", P); L = importlib.util.m
 
 END = 2700
 E = L.Episode("EP2_FoodThieves", "EP2")
-L.park_carts(E)
+L.park_carts_at(E, {"Cart_A": (0.2, 3.57), "Cart_B": (3.57, 0.0)})
 K = {}
 TOAST = (-4.22, 0.97)
 CROI = (-4.68, 0.98)
@@ -44,16 +44,16 @@ K["waitB"] = b.f
 STOP_B = Vector((R * math.cos(CH_END), R * math.sin(CH_END)))
 
 # ---------------------------------------------------------------- White : the cat who appears
-w = E.track("White", (-6.15, 0.85), L.yaw_to(1.0, 0.1))
+w = E.track("White", (-6.55, 0.3), L.yaw_to(1.0, 0.4))
 w.sit(K["grabB"] + 75, "rest")
 K["peekW"] = w.act("sniff", 60, look=[(0, 0.6)])
-K["outW"] = w.walk([(-5.6, 1.55), (-5.15, 1.45)], speed=0.7, style="sneak")
+K["outW"] = w.walk([(-6.5, 1.2), (-5.15, 1.45)], speed=0.7, style="sneak")
 w.turn(CROI, 12)
 K["grabW"] = w.act("grab", 52)
 GRAB_W = K["grabW"] + 26
 w.act("cheer", 40)
 w.idle(30, kind="hold", look=[(0, 0.8)])
-K["stalkW"] = w.walk([(-4.4, -0.25), (-3.6, -1.7), (-2.4, -2.85), (-1.15, -3.05)], speed=0.6, style="sneak", hold=True)
+K["stalkW"] = w.walk([(-3.9, 1.2), (-3.6, -0.1), (-3.6, -1.7), (-2.4, -2.85), (-1.15, -3.05)], speed=0.6, style="sneak", hold=True)
 # arrive behind Black, then the face-off
 w.turn((-0.2, -2.75), 10)
 gap = K["noticeB"] - w.f
@@ -102,13 +102,14 @@ K["tease"] = r.idle(30)
 r.walk([(4.15, -5.3)], speed=0.4, style="sneak")
 r.idle(110, look=[(0, 0.4), (40, -0.2), (80, 0.3)])
 r.act("wave", 50, side="L")
-r.walk([(4.7, -5.9), (5.3, -6.2)], speed=1.4, style="trot")
+K["teaseRun"] = r.walk([(4.7, -5.9), (5.3, -6.2)], speed=1.4, style="trot")
 r.place((60, 0))
 r.idle(max(1, END - r.f + 1))
 
 # ---------------------------------------------------------------- props
 b.hold(GRAB_B, END)
 w.hold(GRAB_W, END)
+L.exit_bars(E)
 E.bake(END)
 held = {}
 held["B_toast"] = L.make_held(E, "Black", "Toast_Low.001", "EP2_Held_Black_Toast", 0.26, yaw=0.3)
@@ -121,6 +122,8 @@ L.key_vis(held["B_croi"], [(SWAP, END)], END, "EP2_HBC")
 L.key_vis(held["W_toast"], [(SWAP, END)], END, "EP2_HWT")
 L.key_vis(E.M["Toast_Low.001"], [(1, GRAB_B - 1)], END, "EP2_OT")
 L.key_vis(E.M["Croissant_Low.003"], [(1, GRAB_W - 1)], END, "EP2_OC")
+
+L.topple(E, "Wooden Box_Low.008", K["teaseRun"] + 6, (-0.75, 0.66))
 
 # flying swap at the bump
 fly_t = L.make_free_copy(E, "Toast_Low.001", "EP2_Fly_Toast")
@@ -159,6 +162,7 @@ C.bake(E.cam, E.aim, END, "EP2")
 # ---------------------------------------------------------------- daylight
 sc = E.sc
 sc.world = L.gradient_world("W_EP2_Day", (0.18, 0.48, 1.0), (0.88, 0.78, 1.0), (0.55, 0.58, 0.85), 1.2)
+L.unity_sky(sc.world)   # camera sees the Unity skybox panorama
 L.grade(E)
 sun = E.M["Sun_Key"]
 sun.rotation_euler = (0.75, 0.0, 0.6)

@@ -111,23 +111,30 @@ public class GameManager : MonoBehaviour
         Vector3 pos = lastPieceSpawn ? lastPieceSpawn.position : Vector3.zero;
         Food.Create(FoodType.LastPiece, pos, foodRoot, false);
         CameraFollow.Shake(0.2f);
+        GameAudio.LastAppear();
     }
 
     // ---------------- Obstacles ----------------
     public void OnKittensLost(int cm, int count, CatPlayer p)
     {
         CameraFollow.Shake(0.35f);
+        GameAudio.Scatter();
         if (count == 0) return;
         rawCm = Mathf.Max(0, rawCm - cm);
         p.SetProgress(Progress);
     }
 
-    public void OnSwept(CatPlayer p) => CameraFollow.Shake(0.3f);
+    public void OnSwept(CatPlayer p)
+    {
+        CameraFollow.Shake(0.3f);
+        GameAudio.Scatter();
+    }
 
     public void OnKittenRejoined(Follower f, CatPlayer p)
     {
         rawCm += f.cm;
         p.SetProgress(Progress);
+        GameAudio.Rejoin();
         CheckLastPiece();
     }
 

@@ -99,8 +99,8 @@ public class Food : MonoBehaviour
     void Start()
     {
         // 씬에 직접 배치한 음식: 미리 만들어 둔 Model 자식을 그대로 쓰고, 없으면 지금 만든다.
-        if (model) return;
-        model = transform.Find("Model");
+        // (FoodSpawner가 먼저 SetType으로 모델을 바꿨을 수도 있으므로 콜라이더 확인은 항상 한다)
+        if (!model) model = transform.Find("Model");
         if (!model) RebuildModel();
         if (!physical && !GetComponent<SphereCollider>())
         {

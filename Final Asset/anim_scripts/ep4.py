@@ -29,7 +29,8 @@ b.turn((0.0, 0.0), 20)
 K["lookBack"] = b.idle(80, look=[(0, -0.45), (40, 0.45), (70, None)])
 b.turn(GATE, 20)
 APPEAR = b.f + 150
-K["sulk"] = b.sit(APPEAR + 25 - b.f, "sulk")
+K["sulk"] = b.sit(APPEAR + 70 - b.f, "sulk")
+OPEN = APPEAR + 140      # bars sink (like ExitGate.cs) once black has noticed
 
 # ---------------------------------------------------------------- 2. rainbow appears on the EXIT bridge
 r.idle(APPEAR - 1)
@@ -42,6 +43,7 @@ K["notice"] = b.idle(20, look=[(0, None)])
 b.act("surprise", 45)
 b.idle(40, look=[(0, 0.2)])
 # rainbow walks in through the EXIT gate
+r.idle(OPEN + 40 - r.f)
 R_IN = r.f
 K["rIn"] = r.walk([(2.8, -8.25), (2.3, -7.05), (1.98, -6.08)], speed=0.7)
 b.idle(max(1, r.f - b.f))
@@ -64,7 +66,7 @@ b.idle(62)
 
 # ---------------------------------------------------------------- 3. off to the plaza, play around the fountain
 K["toPlaza"] = b.walk([(1.0, -3.7), (0.6, -2.55)], speed=1.2, style="trot")
-r.walk([(1.6, -3.9), (1.25, -2.35)], speed=1.25, style="trot")
+r.walk([(1.3, -5.0), (1.45, -3.75), (1.25, -2.35)], speed=1.25, style="trot")
 sync(b, r)
 R = 2.35
 
@@ -115,6 +117,7 @@ w.sit(END - w.f + 1, "gaze")
 
 # rainbow pops in (scale) with a sparkle
 sc_keys = {("scale", i): [(1, 0.0), (APPEAR - 1, 0.0), (APPEAR, 0.05), (APPEAR + 22, 1.15), (APPEAR + 34, 0.95), (APPEAR + 44, 1.0)] for i in range(3)}
+L.exit_bars(E, open_at=OPEN)
 E.bake(END, extra={"Rainbow": sc_keys})
 
 # ---------------------------------------------------------------- sparkle light
@@ -159,6 +162,19 @@ for f, g_, h_, z_ in pal:
 for f, v in [(1, 0.0), (1100, 0.0), (1700, 1.0)]:
     fac.outputs[0].default_value = v
     fac.outputs[0].keyframe_insert("default_value", frame=f)
+# camera sky = Unity skybox panorama, tinted/dimmed into night
+sky = L.unity_sky(world)
+nt = world.node_tree
+tint = nt.nodes.new("ShaderNodeMix"); tint.name = "USKY_tint"
+tint.data_type = 'RGBA'; tint.blend_type = 'MULTIPLY'; tint.inputs["Factor"].default_value = 1.0
+nt.links.new(nt.nodes["USKY_tex"].outputs["Color"], tint.inputs["A"])
+nt.links.new(tint.outputs["Result"], sky.inputs["Color"])
+for f, c, st in [(1, (1.0, 1.0, 1.0), 1.0), (700, (1.0, 0.85, 0.85), 0.9),
+                 (1300, (0.55, 0.45, 0.75), 0.55), (1800, (0.22, 0.25, 0.55), 0.35)]:
+    tint.inputs["B"].default_value = (*c, 1)
+    tint.inputs["B"].keyframe_insert("default_value", frame=f)
+    sky.inputs["Strength"].default_value = st
+    sky.inputs["Strength"].keyframe_insert("default_value", frame=f)
 
 sun = E.M["Sun_Key"]
 L.write_fcurves(sun, "EP4_Sun", {
@@ -200,10 +216,11 @@ L.key_vis(E.M["Broom_Body"], [], END, "EP4_OBroom")
 C = L.Cam(E.tracks)
 C.move(1, K["walkOut"] + 40, (9, -15, 6.5), (4.2, -9.6, 2.4), (0.5, -2.5, 0.5), (1.4, -4.8, 0.5), 26, 32)
 C.follow(K["walkOut"] + 41, K["sulk"] - 1, "Black", off=(0.2, -2.3, 0.8), aim_off=(0, 0, 0.4), lens=38, rel=True, lag=0.05)
-C.static(K["sulk"], APPEAR + 60, (1.1, -4.45, 0.95), (2.75, -8.3, 0.7), 30)
-C.static(APPEAR + 61, K["notice"] - 1, (4.3, -8.0, 1.0), (3.2, -9.45, 0.65), 38)
-C.static(K["notice"], R_IN + 20, (2.2, -6.65, 0.6), (1.7, -5.55, 0.45), 34)
-C.follow(R_IN + 21, f_meet - 1, "Rainbow", off=(0.5, 2.2, 1.1), aim_off=(0, 0, 0.4), lens=34, rel=True, lag=0.06)
+C.static(K["sulk"], APPEAR + 20, (1.1, -4.45, 0.95), (2.75, -8.3, 0.7), 30)
+C.static(APPEAR + 21, APPEAR + 69, (4.3, -8.0, 1.0), (3.2, -9.45, 0.65), 38)
+C.static(APPEAR + 70, OPEN - 11, (2.2, -6.65, 0.6), (1.7, -5.55, 0.45), 34)
+C.static(OPEN - 10, R_IN + 60, (1.0, -4.55, 1.0), (2.6, -7.8, 0.8), 30)
+C.follow(R_IN + 61, f_meet - 1, "Rainbow", off=(0.5, 2.2, 1.1), aim_off=(0, 0, 0.4), lens=34, rel=True, lag=0.06)
 C.static(f_meet, K["hug"] - 1, (3.35, -5.05, 0.8), (1.84, -5.8, 0.45), 32)
 C.move(K["hug"], K["toPlaza"] - 1, (3.35, -5.05, 0.8), (3.2, -4.6, 1.3), (1.84, -5.8, 0.45), (1.6, -5.4, 0.5), 32, 28)
 C.follow(K["toPlaza"], K["lap"] - 1, "Black", off=(1.6, -1.9, 1.2), aim_off=(0.3, 0, 0.4), lens=32, lag=0.07)

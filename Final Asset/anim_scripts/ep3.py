@@ -5,9 +5,9 @@ spec = importlib.util.spec_from_file_location("catlib", P); L = importlib.util.m
 
 END = 2700
 E = L.Episode("EP3_MartStories", "EP3")
-L.park_carts_at(E, {"Cart_A": (-0.6, 3.5), "Cart_B": (-2.6, -2.45)})
+L.park_carts_at(E, {"Cart_A": (-0.6, 3.5), "Cart_B": (3.57, 0.0)})
 K = {}
-b = E.track("Black", (-1.5, -1.3), L.yaw_to(-1, 2))
+b = E.track("Black", (-2.3, -1.6), L.yaw_to(-0.3, 2))
 w = E.track("White", (-3.3, 1.15), L.yaw_to(-0.6, -1.0))
 
 
@@ -83,7 +83,7 @@ K["B_box"] = b.jump((4.55, 2.12), h=0.5, base_to=top)
 b.turn((3.6, 3.6), 12)
 K["B_reach"] = b.act("point", 60)
 b.act("surprise", 40)
-b.jump((3.85, 1.45), h=0.25)
+K["B_kick"] = b.jump((3.85, 1.45), h=0.25)
 b.turn((2.6, 1.0), 10)
 b.walk([(2.6, 1.0)], speed=0.7)
 b.turn(-0.3, 14)
@@ -159,7 +159,7 @@ b.act("cheer", 40); w.act("cheer", 40)
 # share a pear
 PEAR = (2.13, -5.0)
 w.turn(PEAR, 10)
-w.walk([(1.75, -4.85)], speed=0.7)
+w.walk([(1.7, -5.05)], speed=0.7)
 w.turn(PEAR, 8)
 K["C_pear"] = w.act("grab", 50)
 GRAB_P = K["C_pear"] + 25
@@ -176,9 +176,11 @@ w.sit(END - w.f + 1, "eat", look=[(0, None), (160, 0.6), (240, None)])
 w.hold(GRAB_P, END)
 
 # =============================================================== bake cats
+L.exit_bars(E)
 E.bake(END)
 
 # =============================================================== props
+L.topple(E, "Star Box_Low.001", K["B_kick"] + 9, (0.7, 0.67))
 # broom for White in act A
 held_broom = L.make_held(E, "White", "Broom_Body", "EP3_Held_Broom", 0.95, fwd=0.2, down=-0.05, tilt=0.35)
 L.key_vis(held_broom, [(1, 900)], END, "EP3_HBroom")
@@ -295,6 +297,7 @@ C.bake(E.cam, E.aim, END, "EP3")
 # =============================================================== afternoon light
 sc = E.sc
 sc.world = L.gradient_world("W_EP3_Afternoon", (0.32, 0.42, 1.0), (1.0, 0.68, 0.62), (0.66, 0.50, 0.72), 1.15)
+L.unity_sky(sc.world)   # camera sees the Unity skybox panorama
 L.grade(E)
 sun = E.M["Sun_Key"]
 sun.rotation_euler = (0.95, 0.0, -0.6)

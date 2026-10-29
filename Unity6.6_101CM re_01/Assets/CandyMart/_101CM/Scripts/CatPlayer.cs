@@ -206,6 +206,7 @@ public class CatPlayer : MonoBehaviour
         if (jumpQueued && grounded)
         {
             v.y = jumpVelocity;
+            GameAudio.Jump();
             StartCoroutine(HopWave());
             visual.Squash(0.7f);
         }

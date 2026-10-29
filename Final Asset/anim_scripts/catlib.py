@@ -1,5 +1,5 @@
 # CatMart procedural cat animation library (runs inside Blender)
-import bpy, math
+import bpy, math, os
 from mathutils import Vector
 
 TAU = math.tau
@@ -540,8 +540,26 @@ class Track:
         Y1 = yaw_to(P1.x - P0.x, P1.y - P0.y) if dist > 0.05 else Y0
         dur = antic + air + land
         f0 = s.f
+        amp = 0.6 + 0.4 * clamp(h / 0.5)   # small hops squash less
 
         def fn(u):
+            st = fn_(u)
+            st.scale = squash_curve(u)
+            return st
+
+        def squash_curve(u):
+            if u < antic:                       # crouch: squash down
+                return 1 - 0.12 * amp * ss(u / antic)
+            if u < antic + air:                 # takeoff stretch, relax, stretch into the landing
+                k = (u - antic) / air
+                return 1 + amp * (0.15 * (1 - ss(k / 0.45)) + 0.06 * ss((k - 0.7) / 0.3))
+            k = (u - antic - air) / land        # impact squash, springy overshoot back to rest
+            if k < 0.2:
+                return lerp(1 + 0.06 * amp, 1 - 0.22 * amp, ss(k / 0.2))
+            q = (k - 0.2) / 0.8
+            return 1 - 0.22 * amp * math.cos(math.pi * 1.5 * q) * (1 - q)
+
+        def fn_(u):
             t = f0 + u
             p = base_pose()
             if u < antic:
@@ -627,9 +645,14 @@ class Track:
                     pz = fp + prev.z
                     cz = fc + st.z
                     return State(st.pos, alerp(prev.yaw, st.yaw, w), 0.0,
-                                 mix_pose(prev.pose, st.pose, w), base=lerp(pz, cz, w))
+                                 mix_pose(prev.pose, st.pose, w), base=lerp(pz, cz, w),
+                                 scale=lerp(prev.scale, st.scale, w))
                 return st
         return segs[-1][2](segs[-1][1])
+
+    def squash(s, f):
+        """Vertical squash/stretch factor (1 = rest); the Mover scales around the feet."""
+        return s.raw(f).scale
 
     def head_look(s, f, st):
         best = None
@@ -721,6 +744,16 @@ def arm_remap(bone, v):
     return [x * fw, y, z]
 
 
+def _lin(keys, f):
+    """Linear interpolation of sorted (frame, value) keys."""
+    if f <= keys[0][0]:
+        return keys[0][1]
+    for (fa, va), (fb, vb) in zip(keys, keys[1:]):
+        if fa <= f <= fb:
+            return va if fb == fa else lerp(va, vb, (f - fa) / (fb - fa))
+    return keys[-1][1]
+
+
 def bake_cat(track, mover, arm, f_end, tag, smooth_z=0.35, bone_step=2, extra=None):
     has_tail = "Tail.01" in arm.pose.bones
     mv = {("location", 0): [], ("location", 1): [], ("location", 2): [], ("rotation_euler", 2): []}
@@ -748,8 +781,20 @@ def bake_cat(track, mover, arm, f_end, tag, smooth_z=0.35, bone_step=2, extra=No
                     bones.setdefault(('pose.bones["%s"].rotation_euler' % b, i), []).append((f, v[i]))
     # drop channels that never move
     bones = {k: v for k, v in bones.items() if max(abs(x[1]) for x in v) > 1e-4}
+    sq = [track.squash(f) for f in range(1, f_end + 1)]
+    extra = dict(extra or {})
+    if any(abs(v - 1) > 1e-4 for v in sq):
+        # volume-preserving squash on the Mover (origin = feet), multiplied into any extra scale keys
+        for i in range(3):
+            base = extra.pop(("scale", i), None)
+            vals = []
+            for f, v in zip(range(1, f_end + 1), sq):
+                b = _lin(base, f) if base else 1.0
+                vals.append((f, b * (v if i == 2 else 1 / math.sqrt(v))))
+            mv[("scale", i)] = vals
     if extra:
         mv.update(extra)
+    mover.scale = (1, 1, 1)
     write_fcurves(mover, tag + "_Move", mv, "LINEAR")
     # reset pose rotations that are not keyed
     for pb in arm.pose.bones:
@@ -989,6 +1034,46 @@ def gradient_world(name, zenith, horizon, ground, strength=1.0):
     return w
 
 
+SKY_IMG = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                       "HDRI", "Sky_Anime_02_dusk_a.png")   # same panorama as the Unity skybox
+
+
+def unity_sky(w, strength=1.0, rot_z=0.0):
+    """Camera rays see the Unity skybox panorama; lighting keeps the gradient world.
+    Returns the camera Background node (key its Strength / Color to dim it)."""
+    nt = w.node_tree
+    out = next(n for n in nt.nodes if n.bl_idname == "ShaderNodeOutputWorld")
+    old = nt.nodes.get("USKY_mix")   # re-run: the lighting shader feeds the old mix
+    src = (old.inputs[1] if old else out.inputs["Surface"]).links[0].from_socket
+    for n in [n for n in nt.nodes if n.name.startswith("USKY_")]:
+        nt.nodes.remove(n)
+    img = bpy.data.images.load(SKY_IMG, check_existing=True)
+    tc = nt.nodes.new("ShaderNodeTexCoord"); tc.name = "USKY_tc"
+    mp = nt.nodes.new("ShaderNodeMapping"); mp.name = "USKY_rot"
+    mp.inputs["Rotation"].default_value[2] = rot_z
+    env = nt.nodes.new("ShaderNodeTexEnvironment"); env.name = "USKY_tex"
+    env.image = img
+    cbg = nt.nodes.new("ShaderNodeBackground"); cbg.name = "USKY_bg"
+    cbg.inputs["Strength"].default_value = strength
+    lp = nt.nodes.new("ShaderNodeLightPath"); lp.name = "USKY_lp"
+    mix = nt.nodes.new("ShaderNodeMixShader"); mix.name = "USKY_mix"
+    nt.links.new(tc.outputs["Generated"], mp.inputs["Vector"])
+    nt.links.new(mp.outputs["Vector"], env.inputs["Vector"])
+    nt.links.new(env.outputs["Color"], cbg.inputs["Color"])
+    nt.links.new(lp.outputs["Is Camera Ray"], mix.inputs["Fac"])
+    nt.links.new(src, mix.inputs[1])
+    cam = cbg.outputs["Background"]
+    star = next((n for n in nt.nodes if n.bl_idname == "ShaderNodeEmission"), None)
+    if star:   # night world: stars stay visible on top of the sky
+        add_ = nt.nodes.new("ShaderNodeAddShader"); add_.name = "USKY_add"
+        nt.links.new(cam, add_.inputs[0])
+        nt.links.new(star.outputs["Emission"], add_.inputs[1])
+        cam = add_.outputs[0]
+    nt.links.new(cam, mix.inputs[2])
+    nt.links.new(mix.outputs[0], out.inputs["Surface"])
+    return cbg
+
+
 # ----------------------------------------------------------------- episode setup
 CATS = {"Black": ("Cat_Black", (0.048, 0.03, 0), 1.0),
         "White": ("Cat_White", (-1.0, 0.0, 0), 1.35),
@@ -1022,6 +1107,11 @@ class Episode:
         s.cam.data.dof.use_dof = True
         s.cam.data.dof.focus_object = s.aim
         s.cam.data.dof.aperture_fstop = 3.2
+        s.sc.render.resolution_x, s.sc.render.resolution_y = 1920, 1080
+        s.cam.data.sensor_fit = 'AUTO'
+        s.cam.data.sensor_width = 36.0 * (1280 / 1920) * (1920 / 1080)   # 16:9 keeping the 3:2 vertical framing
+        s.sc.render.use_motion_blur = True
+        s.sc.render.motion_blur_shutter = 0.5   # half-frame shutter: smooth runs, no smeared idles
         s.tracks = {}
         ivory_white_cat(s)
 
@@ -1224,3 +1314,97 @@ def grade(E, **kw):
     ng.links.new(bc.outputs["Image"], seta.inputs["Image"])
     glare.inputs["Strength"].default_value = g["bloom"]
     glare.inputs["Threshold"].default_value = g["bloom_thr"]
+
+
+def topple(E, src_name, f0, d, tip=14, settle=12, tag=None):
+    """Box knocked over: tips around its bottom edge in direction d (x, y),
+    drops to the ground if it was stacked, then rocks and settles."""
+    from mathutils import Matrix, Quaternion
+    o = E.M[src_name]
+    E.sc.frame_set(1)
+    unparent_keep(o)
+    o.rotation_mode = 'QUATERNION'
+    M0 = o.matrix_world.copy()
+    d = Vector((d[0], d[1], 0)).normalized()
+    bb = [M0 @ Vector(v) for v in o.bound_box]
+    c = sum(bb, Vector()) / 8
+    zb = min(v.z for v in bb)
+    hd = max((v - c).dot(d) for v in bb)            # half extent along d
+    hz = (max(v.z for v in bb) - zb) / 2
+    P0 = Vector((c.x + d.x * hd, c.y + d.y * hd, zb))
+    land = Vector((c.x + d.x * (hd + hz), c.y + d.y * (hd + hz)))
+    gz = E.ground(land)
+    drop = max(0.0, zb - gz)
+    axis = Vector((-d.y, d.x, 0))
+    T = lambda v: Matrix.Translation(v)
+    ch = {}
+    end = f0 + tip + settle
+    frames = [1, f0 - 1] + list(range(f0, end + 1))
+    for f in frames:
+        if f < f0:
+            th, P = 0.0, P0.copy()
+        elif f <= f0 + tip:
+            k = (f - f0) / tip
+            th = (math.pi / 2) * k * k
+            P = P0 + Vector((d.x * 0.08 * k, d.y * 0.08 * k, -drop * k * k))
+        else:
+            u = (f - f0 - tip) / settle
+            th = math.pi / 2 - 0.16 * math.sin(math.pi * u) * (1 - u)
+            P = P0 + Vector((d.x * 0.08, d.y * 0.08, -drop + 0.04 * math.sin(math.pi * u) * (1 - u)))
+        Mw = T(P) @ Quaternion(axis, th).to_matrix().to_4x4() @ T(-P0) @ M0
+        loc, rot, sca = Mw.decompose()
+        for i in range(3):
+            ch.setdefault(("location", i), []).append((f, loc[i]))
+        for i in range(4):
+            ch.setdefault(("rotation_quaternion", i), []).append((f, rot[i]))
+    write_fcurves(o, tag or (E.tag + "_Topple_" + o.name), ch, "BEZIER")
+    return end
+
+
+# EXIT bars (Unity ExitGate/Bars = P_Fence): same proportions as in re_01.
+BARS_SRC = "ExitBars"
+BARS_WIDTH = 1.31          # Unity 3.1 m wide / 2.36 (Unity gate is 2.36x the Blender gate)
+BARS_Z = 0.84              # centre height (Unity 1.84 m above the gate base)
+
+
+def place_bars(o, gate):
+    import math
+    from mathutils import Matrix
+    gw = gate.matrix_world
+    yaw = gw.to_euler().z
+    o.parent = None
+    o.rotation_mode = 'XYZ'
+    o.rotation_euler = (0, 0, 0)
+    o.scale = (1, 1, 1)
+    o.location = (0, 0, 0)
+    bpy.context.view_layer.update()
+    k = BARS_WIDTH / o.dimensions.x
+    c = sum((Vector(v) for v in o.bound_box), Vector()) / 8
+    o.scale = (k, k, k)
+    o.rotation_euler = (0, 0, yaw)
+    R = Matrix.Rotation(yaw, 4, 'Z')
+    off = R @ Vector((c.x * k, c.y * k, c.z * k))
+    o.location = (gw.translation.x - off.x, gw.translation.y - off.y, BARS_Z - off.z)
+
+
+def exit_bars(E, open_at=None, dur=36):
+    """Bars in this episode's EXIT gate; optional opening (sinks like ExitGate.cs, then hides)."""
+    src = bpy.data.objects[BARS_SRC]
+    name = "%s_ExitBars" % E.tag
+    o = bpy.data.objects.get(name)
+    if o is None:
+        o = bpy.data.objects.new(name, src.data)
+        E.sc.collection.objects.link(o)
+    place_bars(o, E.M["Exit Wooden_Low.001"])
+    o.animation_data_clear()
+    if open_at:
+        z0 = o.location.z
+        drop = 3.2 / 2.36
+        ch = {("location", 2): [(1, z0), (open_at, z0), (open_at + dur, z0 - drop)]}
+        act = write_fcurves(o, name + "_Open", ch, "BEZIER")
+        for dp in ("hide_viewport", "hide_render"):     # hidden once fully sunk
+            fc = act.fcurve_ensure_for_datablock(o, dp)
+            for f, v in ((1, 0.0), (open_at + dur + 1, 1.0)):
+                k = fc.keyframe_points.insert(f, v)
+                k.interpolation = 'CONSTANT'
+    return o
