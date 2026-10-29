@@ -343,6 +343,7 @@ public class Food : MonoBehaviour
         var rb = GetComponent<Rigidbody>();
         if (rb) rb.isKinematic = true;
         if (GameManager.I) GameManager.I.OnFoodEaten(this, by);
+        GameAudio.Eat();
         StartCoroutine(EatRoutine(by.transform));
     }
 

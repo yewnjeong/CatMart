@@ -309,6 +309,7 @@ public class GameFlowUI : MonoBehaviour
         var b = slot.AddComponent<Button>();
         b.transition = Selectable.Transition.None;
         b.navigation = new Navigation { mode = Navigation.Mode.None };
+        b.onClick.AddListener(GameAudio.UIClick);
         b.onClick.AddListener(onClick);
         b.onClick.AddListener(() => { if (EventSystem.current) EventSystem.current.SetSelectedGameObject(null); });
         var fx = slot.AddComponent<UIButtonFx>();
@@ -586,6 +587,7 @@ public class GameFlowUI : MonoBehaviour
         cb.disabledColor = Color.white;   // 비활성 화살표는 CanvasGroup 알파로 표시
         b.colors = cb;
         b.navigation = new Navigation { mode = Navigation.Mode.None };
+        b.onClick.AddListener(GameAudio.UIClick);
         b.onClick.AddListener(onClick);
         // 클릭한 버튼이 선택된 채로 남으면 Space(점프)가 버튼을 다시 누르므로 선택 해제
         b.onClick.AddListener(() => { if (EventSystem.current) EventSystem.current.SetSelectedGameObject(null); });
@@ -602,6 +604,7 @@ public class GameFlowUI : MonoBehaviour
         var b = go.AddComponent<Button>();
         b.transition = Selectable.Transition.None;
         b.navigation = new Navigation { mode = Navigation.Mode.None };
+        b.onClick.AddListener(GameAudio.UIClick);
         b.onClick.AddListener(onClick);
         b.onClick.AddListener(() => { if (EventSystem.current) EventSystem.current.SetSelectedGameObject(null); });
     }
