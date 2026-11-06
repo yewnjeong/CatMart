@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 // 새 종류는 끝에 추가 (씬/프리팹에 숫자로 저장되므로 기존 순서를 바꾸지 않는다)
@@ -87,7 +87,7 @@ public class Food : MonoBehaviour
         if (eaten || !model) return;
         float target = highlighted ? 1.3f + Mathf.Sin(Time.time * 8f) * 0.06f : 1f;
         highlightScale = Mathf.MoveTowards(highlightScale, target, Time.deltaTime * 3f);
-        model.localScale = Vector3.one * highlightScale;
+        model.localScale = squash * highlightScale;
     }
 
     void Awake()
@@ -175,7 +175,12 @@ public class Food : MonoBehaviour
             tc.center = new Vector3(0f, 0.3f, 0f);
         }
 
-        // (마지막 1CM 주변 빛 조명은 제거)
+        // 마지막 1CM: 무지개 반짝이 + 은은한 빛 (Resources/RainbowSparkles, 깜빡이지 않음)
+        if (t == FoodType.LastPiece)
+        {
+            var fx = Resources.Load<GameObject>("RainbowSparkles");
+            if (fx) Instantiate(fx, go.transform, false).name = "RainbowSparkles";
+        }
         return f;
     }
 
@@ -292,7 +297,6 @@ public class Food : MonoBehaviour
                     g.transform.localScale = Vector3.one * 0.75f;
                 }
                 else Palette.Star(m, Vector3.zero, 0.8f, new Color(1f, 0.84f, 0.3f), 1.8f);
-                Palette.Text(m, "1CM", new Vector3(0, 0.75f, 0), 0.35f, new Color(1f, 0.95f, 0.7f));
                 return 0.35f;
             }
         }
@@ -325,17 +329,45 @@ public class Food : MonoBehaviour
         PopIn();
     }
 
+    // 마지막 1CM(무지개 고양이): 통통 제자리 점프 + 착지 찌그러짐, 주인공 쪽을 바라봄
+    const float HopPeriod = 0.62f, HopHeight = 0.42f;
+    Vector3 squash = Vector3.one;
+
     void Update()
     {
         if (eaten || physical || !model) return;
         phase += Time.deltaTime;
+        if (type == FoodType.LastPiece) { Hop(); return; }
         model.localPosition = new Vector3(0f, 0.35f + Mathf.Sin(phase * 2.5f) * 0.08f, 0f);
         model.Rotate(0f, 70f * Time.deltaTime, 0f, Space.World);
     }
 
+    void Hop()
+    {
+        float n = Mathf.Repeat(phase, HopPeriod) / HopPeriod;          // 0 = 바닥에서 출발, 1 = 다시 바닥
+        float air = 4f * n * (1f - n);                                 // 포물선 높이 0~1
+        model.localPosition = new Vector3(0f, 0.35f + air * HopHeight, 0f);
+        // 바닥 근처에서 납작(착지·도약), 공중에선 살짝 길쭉
+        float ground = Mathf.Clamp01(1f - Mathf.Min(n, 1f - n) / 0.12f);
+        float sy = 1f - 0.22f * ground + 0.06f * air;
+        float sxz = 1f / Mathf.Sqrt(sy);
+        squash = new Vector3(sxz, sy, sxz);
+
+        var p = GameManager.I ? GameManager.I.player : null;
+        if (p)
+        {
+            Vector3 to = p.transform.position - transform.position; to.y = 0f;
+            if (to.sqrMagnitude > 0.01f)
+            {
+                var want = Quaternion.LookRotation(to);
+                model.rotation = Quaternion.RotateTowards(model.rotation, want, 180f * Time.deltaTime);
+            }
+        }
+    }
+
     public void Eat(CatPlayer by)
     {
-        if (eaten) return;
+        if (eaten || !by) return;
         if (GameManager.I && !GameManager.I.CanEat) return;
         if (physical && Time.time - spawnTime < 0.4f) return; // 쏟아지는 순간 바로 먹히지 않게
         eaten = true;
@@ -343,22 +375,76 @@ public class Food : MonoBehaviour
         var rb = GetComponent<Rigidbody>();
         if (rb) rb.isKinematic = true;
         if (GameManager.I) GameManager.I.OnFoodEaten(this, by);
-        GameAudio.Eat();
-        StartCoroutine(EatRoutine(by.transform));
+        if (type != FoodType.LastPiece) GameAudio.Eat();   // 마지막 1CM는 출구 열리는 소리만
+        if (type != FoodType.LastPiece && by.visual) by.visual.PlayEat();
+        StartCoroutine(EatRoutine(by));
     }
 
-    IEnumerator EatRoutine(Transform target)
+    IEnumerator EatRoutine(CatPlayer target)
     {
-        Vector3 start = transform.position, s0 = transform.localScale;
-        float t = 0f;
-        while (t < 0.22f)
+        // Animate the visible model itself: floating foods have an offset from their root.
+        Transform foodVisual = model ? model : transform;
+        Vector3 start = foodVisual.position, scale = foodVisual.localScale;
+        Quaternion rotation = foodVisual.rotation;
+        const float duration = 0.36f;
+        float elapsed = 0f;
+        Vector3 mouth = start;
+        while (elapsed < duration)
         {
-            t += Time.deltaTime;
-            float n = Mathf.Clamp01(t / 0.22f);
-            transform.position = Vector3.Lerp(start, target.position + Vector3.up * 0.6f, n);
-            transform.localScale = s0 * (1f - n);
+            if (!target) { Destroy(gameObject); yield break; }
+            elapsed += Time.deltaTime;
+            float n = Mathf.Clamp01(elapsed / duration);
+            mouth = target.visual ? target.visual.BitePoint : target.transform.position + Vector3.up * 0.6f;
+            // A short anticipation pop, followed by an accelerating curved pull.
+            float pull = Mathf.Clamp01((n - 0.18f) / 0.82f);
+            pull *= pull;
+            Vector3 control = (start + mouth) * 0.5f + Vector3.up * 0.5f;
+            float inverse = 1f - pull;
+            foodVisual.position = inverse * inverse * start + 2f * inverse * pull * control + pull * pull * mouth;
+            float pop = 1f + 0.18f * Mathf.Sin(Mathf.Clamp01(n / 0.35f) * Mathf.PI);
+            foodVisual.localScale = scale * (pop * (1f - pull));
+            foodVisual.rotation = rotation * Quaternion.Euler(0f, 150f * pull, -25f * Mathf.Sin(pull * Mathf.PI));
             yield return null;
         }
+        // The last piece retains its special ending presentation.
+        if (type != FoodType.LastPiece) yield return EatSparkles(mouth);
         Destroy(gameObject);
+    }
+
+    IEnumerator EatSparkles(Vector3 center)
+    {
+        const int count = 8;
+        var burst = new GameObject("EatSparkles").transform;
+        burst.SetParent(transform, true);
+        burst.position = center;
+        // Camera-facing diamonds read clearly even with the game's overhead camera.
+        var cam = Camera.main;
+        Quaternion facing = cam ? cam.transform.rotation : Quaternion.identity;
+        var pieces = new Transform[count];
+        for (int i = 0; i < count; i++)
+        {
+            Color color = i % 2 == 0 ? new Color(1f, 0.88f, 0.55f) : new Color(1f, 0.73f, 0.80f);
+            pieces[i] = Palette.Shape(PrimitiveType.Cube, burst, Vector3.zero, Vector3.zero,
+                color, emission: 0.35f, name: "CrumbSparkle").transform;
+            pieces[i].rotation = facing * Quaternion.Euler(0f, 0f, 45f);
+        }
+        float elapsed = 0f;
+        const float life = 0.32f;
+        while (elapsed < life)
+        {
+            elapsed += Time.deltaTime;
+            float n = Mathf.Clamp01(elapsed / life);
+            float spread = 1f - (1f - n) * (1f - n);
+            for (int i = 0; i < count; i++)
+            {
+                float angle = i * Mathf.PI * 2f / count;
+                Vector3 direction = facing * new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0f);
+                pieces[i].position = center + direction * (0.12f + spread * 0.38f) + Vector3.up * (0.1f * n);
+                float size = Mathf.Sin(n * Mathf.PI) * (i % 2 == 0 ? 0.11f : 0.075f);
+                pieces[i].localScale = new Vector3(size, size, size * 0.25f);
+            }
+            yield return null;
+        }
+        Destroy(burst.gameObject);
     }
 }

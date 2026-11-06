@@ -7,9 +7,9 @@ using UnityEngine.UI;
 
 /// <summary>
 /// Figma 시안(101CM Game UI · UI SunSet KO/EN)대로 만든 Canvas UI 전체.
-/// 시작 화면(02-1) · 게임 설명 1~3(02-2~4 / 03-2~4) · 진행 HUD(01-x) · Esc 메뉴(03-1) · 클리어(04).
+/// 시작 화면(02-1) · 게임 방법 1~4(02-1~4 / 03-1~4) · 진행 HUD(01-x) · Esc 메뉴(03-1) · 클리어(04).
 /// 이미지 위치는 FigmaUILayout(Figma 1920x1080 프레임 기준 왼쪽 위 x, y, 폭, 높이). 이미지·폰트는 Resources/FigmaUISkin.
-/// 글자 중 언어에 따라 바뀌는 것만 Text로 두고, 시작 화면의 KOR/ENG 토글로 바꾼다 (PlayerPrefs에 저장).
+/// 메뉴와 게임 방법 카드는 최종 Figma 원본을 사용한다. 음량과 플레이 기록은 실행 중 갱신한다.
 /// GameManager가 씬에서 못 찾으면 실행 시 자동으로 붙인다.
 /// </summary>
 public class GameFlowUI : MonoBehaviour
@@ -37,15 +37,14 @@ public class GameFlowUI : MonoBehaviour
     const float EarTipY = 41f;   // 시안에서 HUD 귀 끝의 y (H_Ears)
 
     static readonly Color Brown = new Color32(0x8A, 0x5A, 0x4E, 0xFF);
-    static readonly Color DarkBrown = new Color32(0x6E, 0x4A, 0x40, 0xFF);
-    static readonly Color Coral = new Color32(0xF2, 0x73, 0x7E, 0xFF);
     // Dim: rgba(255,196,192) — Esc 위(03): 0.6 x 0.94 / 시작 화면 위(02): 0.3 x 0.94
     static readonly Color DimPlay = new Color(1f, 0.769f, 0.753f, 0.564f);
     static readonly Color DimTitle = new Color(1f, 0.769f, 0.753f, 0.282f);
     // 시작 화면 배경은 0.75, 게임 설명(02-2~4) 배경은 0.55 불투명 → 흰색 0.27을 덮어 맞춤
     static readonly Color TitleFade = new Color(1f, 1f, 1f, 0.267f);
 
-    GameObject titleRoot, hudRoot, menuRoot, guideRoot, clearRoot, settingsRoot;
+    GameObject titleRoot, hudRoot, menuRoot, guideRoot, clearRoot;
+    GameObject titleDesign;   // 시작 화면의 로고·고양이·버튼 (배경 그림 제외)
     RectTransform gaugeMask;
     Text cmText, catText, clearTime;
     float shownProgress;
@@ -54,20 +53,19 @@ public class GameFlowUI : MonoBehaviour
     // 언어별 글자
     struct LocText { public Text text; public string ko, en; public bool enFredoka; }
     readonly List<LocText> locs = new List<LocText>();
-    Image langToggle, clearBubble;
+    Image langToggle, clearBubble, menuArt, guideArt;
+    readonly List<(Image art, string asset, float cx, float y)> finalButtons = new();
 
-    // 설정 (03-5)
-    Image settingsLang;
-    VolumeSlider bgmSlider, sfxSlider;
-    Text bgmValue, sfxValue;
+    VolumeSlider masterSlider;
+    Text masterValue;
+    RawImage masterArtworkPatch;
+    RectTransform masterSliderDesign, settingsKoHit, settingsEnHit;
 
-    // 게임 설명
     Image guideDim, guideFade;
-    Text guideHeader;
-    readonly GameObject[] pages = new GameObject[3];
-    CanvasGroup prevGroup, nextGroup;
+    RectTransform guideDesign;
+    GameObject settingsRoot;
     Button prevButton, nextButton;
-    readonly Image[] dots = new Image[3];
+    const int GuidePageCount = 4;
     int page;
 
     void Awake() => I = this;
@@ -98,8 +96,8 @@ public class GameFlowUI : MonoBehaviour
         }
 
         hudRoot.SetActive(!gm.OnTitle && !gm.IsWon);
-        bool menuOn = gm.MenuOpen && !guideRoot.activeSelf && !settingsRoot.activeSelf;
-        if (gm.MenuOpen && !lastMenuOpen) SetMenuFocus(0);   // Esc로 새로 열 때만 RESUME부터 (게임 설명에서 돌아올 땐 유지)
+        bool menuOn = gm.MenuOpen && !guideRoot.activeSelf;
+        if (gm.MenuOpen && !lastMenuOpen) SetMenuFocus(0);   // Esc로 새로 열 때만 계속하기부터 (게임 방법에서 돌아올 땐 유지)
         lastMenuOpen = gm.MenuOpen;
         menuRoot.SetActive(menuOn);
         if (hudRoot.activeSelf) UpdateHud(gm);
@@ -133,8 +131,12 @@ public class GameFlowUI : MonoBehaviour
     {
         // 시작 화면 위(02-2~4)와 게임 중 Esc 위(03-2~4)는 뒤 배경 처리가 다름
         bool overTitle = titleRoot.activeSelf;
+        // Figma 02-2~4: 시작 화면 위 게임 설명은 배경 그림만 남고 로고·고양이·버튼은 사라짐
+        if (titleDesign) titleDesign.SetActive(!overTitle);
         guideFade.gameObject.SetActive(overTitle);
         guideDim.color = overTitle ? DimTitle : DimPlay;
+        masterSlider.SetValue(GameAudio.MasterVolume);
+        UpdateVolumeTexts();
         ShowPage(0);
         guideRoot.SetActive(true);
     }
@@ -142,58 +144,41 @@ public class GameFlowUI : MonoBehaviour
     /// <summary>Esc·닫기 버튼·바깥 클릭. 게임 설명이나 설정이 열려 있었으면 닫고 true.</summary>
     public bool CloseGuide()
     {
-        if (settingsRoot && settingsRoot.activeSelf) { CloseSettings(); return true; }
         if (!guideRoot || !guideRoot.activeSelf) return false;
         guideRoot.SetActive(false);
-        return true;
-    }
-
-    void OpenSettings()
-    {
-        bgmSlider.SetValue(GameAudio.BgmVolume);
-        sfxSlider.SetValue(GameAudio.SfxVolume);
-        UpdateVolumeTexts();
-        settingsRoot.SetActive(true);
-    }
-
-    void CloseSettings()
-    {
-        settingsRoot.SetActive(false);
         GameAudio.SaveVolumes();
+        if (titleDesign) titleDesign.SetActive(true);
+        return true;
     }
 
     void UpdateVolumeTexts()
     {
-        bgmValue.text = Mathf.RoundToInt(bgmSlider.Value * 100f) + "%";
-        sfxValue.text = Mathf.RoundToInt(sfxSlider.Value * 100f) + "%";
+        masterValue.text = Mathf.RoundToInt(masterSlider.Value * 100f) + "%";
     }
 
     void ShowPage(int p)
     {
-        page = Mathf.Clamp(p, 0, 2);
-        for (int i = 0; i < 3; i++) pages[i].SetActive(i == page);
-        string[] ko = { "목표", "조작 방법", "게임 규칙" };
-        string[] en = { "Goal", "Controls", "Rules" };
-        guideHeader.text = English ? en[page] : ko[page];
-        guideHeader.font = English ? skin.enFont : skin.bodyFont;
-        // 점: 현재 페이지만 34px 알약, 나머지 14px 원 (간격 10). 스프라이트는 그림자 여백만큼 1~3px 큼
-        float x = 919f;
-        for (int i = 0; i < 3; i++)
+        page = Mathf.Clamp(p, 0, GuidePageCount - 1);
+        bool settings = page == 0;
+        bool english = English;
+        var sprite = FinalArtwork($"Guide{page + 1}", english);
+        guideArt.sprite = sprite;
+        guideDesign.anchoredPosition = new Vector2(0f, settings && titleRoot.activeSelf ? -7f : 0f);
+        settingsRoot.SetActive(settings);
+        prevButton.interactable = page > 0;
+        nextButton.interactable = page < GuidePageCount - 1;
+        if (settings)
         {
-            bool on = i == page;
-            float w = on ? 34f : 14f;
-            dots[i].sprite = skin.Get(on ? "G_DotOn" : "G_DotOff");
-            Place(dots[i].rectTransform, x - 1f, 820f, w + 3f, 18f);
-            x += w + 10f;
+            // Sample a clean pixel of the card so the runtime volume control blends into the Figma panel.
+            masterArtworkPatch.texture = sprite.texture;
+            masterArtworkPatch.uvRect = new Rect(0.72f, 0.52f, 0f, 0f);
+            masterSliderDesign.anchoredPosition = new Vector2(english ? 5f : 0f, english ? 2f : 7f);
+            Place(masterValue.rectTransform, 1131f, english ? 530f : 524f, 90f, 35f);
+            float x = english ? 849f : 837f;
+            float y = english ? 608f : 612f;
+            Place(settingsKoHit, x, y, 120f, 72f);
+            Place(settingsEnHit, x + 120f, y, 120f, 72f);
         }
-        SetArrow(prevButton, prevGroup, page > 0);
-        SetArrow(nextButton, nextGroup, page < 2);
-    }
-
-    static void SetArrow(Button b, CanvasGroup g, bool on)
-    {
-        b.interactable = on;
-        g.alpha = on ? 1f : 0.4f;
     }
 
     void SetLanguage(bool english)
@@ -211,8 +196,15 @@ public class GameFlowUI : MonoBehaviour
             l.text.font = en && l.enFredoka ? skin.enFont : skin.bodyFont;
         }
         langToggle.sprite = skin.Get(en ? "T_LangENG" : "T_LangKOR");
-        settingsLang.sprite = skin.Get(en ? "S_LangENG" : "S_LangKOR");
-        bgmValue.font = sfxValue.font = en ? skin.enFont : skin.bodyFont;
+        masterValue.font = en ? skin.enFont : skin.bodyFont;
+        SetMenuFocus(menuFocus);
+        foreach (var (art, asset, centerX, y) in finalButtons)
+        {
+            var sprite = FinalArtwork(asset, en);
+            art.sprite = sprite;
+            float w = sprite.rect.width * 0.5f;
+            Place(art.rectTransform, centerX - w * 0.5f, y, w, sprite.rect.height * 0.5f);
+        }
         // 클리어 말풍선: EN은 글자가 길어 더 넓은 풍선, 글자 중심도 오른쪽으로 25px
         clearBubble.sprite = skin.Get(en ? "C_BubbleEN" : "C_BubbleKO");
         PlaceSprite(clearBubble.rectTransform, en ? "C_BubbleEN" : "C_BubbleKO");
@@ -221,7 +213,7 @@ public class GameFlowUI : MonoBehaviour
             if (l.text.name.StartsWith("ClearLabel"))
                 PlaceCenter(l.text.rectTransform, cx, en ? 536f : 536.5f, 500f, 70f);
         PlaceCenter(clearTime.rectTransform, cx, en ? 593f : 593.5f, 300f, 60f);
-        if (guideRoot && guideRoot.activeSelf) ShowPage(page);
+        ShowPage(page);
         var gm = GameManager.I;
         catText.font = en ? skin.enFont : skin.bodyFont;
         if (catText) catText.text = en ? $"Cats following: {(gm && gm.player ? gm.player.FollowerCount : 0)}"
@@ -265,7 +257,7 @@ public class GameFlowUI : MonoBehaviour
         BuildTitle(root);
         BuildClear(root);
         BuildGuide(root);   // 시작 화면·메뉴 위에 뜨므로 마지막
-        BuildSettings(root);
+        BuildSettings();
         ApplyLanguage();
     }
 
@@ -285,7 +277,9 @@ public class GameFlowUI : MonoBehaviour
         var maskGo = new GameObject("GaugeFillMask", typeof(RectTransform), typeof(RectMask2D));
         gaugeMask = (RectTransform)maskGo.transform;
         gaugeMask.SetParent(hrt, false);
-        gaugeMask.anchorMin = gaugeMask.anchorMax = gaugeMask.pivot = new Vector2(0f, 1f);
+        // Position below is relative to the center of the 1920x1080 HUD.
+        gaugeMask.anchorMin = gaugeMask.anchorMax = new Vector2(0.5f, 0.5f);
+        gaugeMask.pivot = new Vector2(0f, 1f);
         gaugeMask.anchoredPosition = new Vector2(601f - 960f, 540f - 104f);
         gaugeMask.sizeDelta = new Vector2(0f, 73f);
         var fill = Spr("GaugeFill", gaugeMask, "H_GaugeFill");
@@ -307,56 +301,29 @@ public class GameFlowUI : MonoBehaviour
         menuRoot = FullScreen("Menu", root);
         Dim(menuRoot.transform, null).color = DimPlay;
         var d = Design("Design", menuRoot.transform);
-        Spr("Panel", d, "M_Panel");
-        MenuButton(0, d, "Resume", OnResume);
-        MenuButton(1, d, "Retry", OnRetry);
-        MenuButton(2, d, "HowTo", OpenGuide);
-        MenuButton(3, d, "Home", OnHome);
-        MenuButton(4, d, "Settings", OpenSettings);
-        SetMenuFocus(0);
+        menuArt = FinalImage("Panel", d);
+        Place(menuArt.rectTransform, 560f, 170f, 800f, 815f);
+        MenuHit(0, d, "Resume", OnResume);
+        MenuHit(1, d, "Retry", OnRetry);
+        MenuHit(2, d, "HowTo", OpenGuide);
+        MenuHit(3, d, "Home", OnHome);
         menuRoot.SetActive(false);
     }
 
-    // 메뉴 버튼: 마우스가 올라간 버튼만 핑크(Primary), 나머지는 크림(Secondary). 열 때마다 RESUME부터.
-    const int MenuCount = 5;
-    const float MenuY0 = 427f, MenuStep = 86f, MenuH = 72f;   // 시안의 버튼 칸: x 700, y 427 + 86*i, 520x72
-    readonly Image[] menuImg = new Image[MenuCount];
-    readonly string[] menuKey = new string[MenuCount];
+    // 메뉴 버튼: 마우스가 올라간 버튼만 핑크. 패널 그림을 통째로 바꾼다 (Menu = 계속하기, Menu1~3 = 다시 하기/게임 방법/시작 화면).
+    int menuFocus;
     bool lastMenuOpen;
 
-    void MenuButton(int i, RectTransform d, string key, UnityEngine.Events.UnityAction onClick)
+    void MenuHit(int i, Transform d, string name, UnityEngine.Events.UnityAction onClick)
     {
-        var slotRect = new Rect(700f, MenuY0 + MenuStep * i, 520f, MenuH);
-        var slot = new GameObject(key, typeof(RectTransform), typeof(Image));
-        var srt = (RectTransform)slot.transform;
-        srt.SetParent(d, false);
-        Place(srt, slotRect.x, slotRect.y, slotRect.width, slotRect.height);
-        slot.GetComponent<Image>().color = Color.clear;   // 클릭 영역
-        menuKey[i] = key;
-        menuImg[i] = new GameObject("Visual", typeof(RectTransform), typeof(Image)).GetComponent<Image>();
-        menuImg[i].transform.SetParent(srt, false);
-        menuImg[i].raycastTarget = false;
-
-        var b = slot.AddComponent<Button>();
-        b.transition = Selectable.Transition.None;
-        b.navigation = new Navigation { mode = Navigation.Mode.None };
-        b.onClick.AddListener(GameAudio.UIClick);
-        b.onClick.AddListener(onClick);
-        b.onClick.AddListener(() => { if (EventSystem.current) EventSystem.current.SetSelectedGameObject(null); });
-        var fx = slot.AddComponent<UIButtonFx>();
-        fx.onHover = () => SetMenuFocus(i);
+        var b = HitArea(name, d, 700f, 441f + 100f * i, 520f, 72f, onClick);
+        b.gameObject.AddComponent<UIButtonFx>().onHover = () => SetMenuFocus(i);
     }
 
     void SetMenuFocus(int focus)
     {
-        for (int i = 0; i < MenuCount; i++)
-        {
-            string name = $"M_Btn{menuKey[i]}{(i == focus ? "On" : "Off")}";
-            menuImg[i].sprite = skin.Get(name);
-            var r = FigmaUILayout.Rects[name];
-            float slotY = MenuY0 + MenuStep * i;
-            Place(menuImg[i].rectTransform, r.x - 700f, r.y - slotY, r.width, r.height, 520f, MenuH);
-        }
+        menuFocus = focus;
+        menuArt.sprite = FinalArtwork(focus == 0 ? "Menu" : $"Menu{focus}", English);
     }
 
     // ===== 02-1 시작 화면 =====
@@ -365,9 +332,10 @@ public class GameFlowUI : MonoBehaviour
         titleRoot = FullScreen("Title", root);
         Background(titleRoot.transform, "BG_Title", out _);
         var d = Design("Design", titleRoot.transform);
+        titleDesign = d.gameObject;
         Spr("Cat", d, "T_Cat");
-        var logo = Spr("Logo", d, "T_Logo");
-        UIMotion.Add(logo.gameObject, UIMotion.Mode.DropIn, null, 1.2f, false);
+        // Figma 101CM 텍스트 모션: 글자 5개, 0.2초 간격, 0.4초, cubic-bezier(0.42, 0, 1, 1), 2초 반복
+        LetterTitle("Logo", d, "T_Logo", 5, 0.2f, 0.4f, new Vector4(0.42f, 0f, 1f, 1f));
 
         UIMotion.Add(Spr("DecoLineA", d, "T_LineA").gameObject, UIMotion.Mode.Scale, UIMotion.Keys(0f, 1f, 0.3f, 1.2f, 0.6f, 1f, 2f, 1f));
         UIMotion.Add(Spr("DecoLineB", d, "T_LineB").gameObject, UIMotion.Mode.Scale, UIMotion.Keys(0f, 1.2f, 0.3f, 1f, 2f, 1f));
@@ -375,8 +343,8 @@ public class GameFlowUI : MonoBehaviour
         UIMotion.Add(Spr("StarA", d, "T_StarA").gameObject, UIMotion.Mode.Scale, popIn);
         UIMotion.Add(Spr("StarB", d, "T_StarB").gameObject, UIMotion.Mode.Scale, popIn);
 
-        Btn("GameStart", d, "T_BtnStart", OnStart);
-        Btn("HowToPlay", d, "T_HowTo", OpenGuide);
+        FinalButton("GameStart", d, "Start", 1177f, 699f, OnStart);
+        FinalButton("HowToPlay", d, "HowTo", 1178f, 839f, OpenGuide);
 
         // 언어 토글: 그림 한 장(선택된 쪽이 크림색) + 왼쪽 반 KOR / 오른쪽 반 ENG 클릭 영역
         langToggle = Spr("LangToggle", d, "T_LangKOR");
@@ -385,154 +353,76 @@ public class GameFlowUI : MonoBehaviour
         HitArea("ENG", d, lr.x + lr.width * 0.5f, lr.y, lr.width * 0.5f, lr.height, () => SetLanguage(true));
     }
 
-    // ===== 02-2~4 / 03-2~4 게임 설명 =====
+    // ===== 02-1~4 / 03-1~4 게임 방법 =====
     void BuildGuide(Transform root)
     {
         guideRoot = FullScreen("Guide", root);
         guideFade = FullScreen("TitleFade", guideRoot.transform).AddComponent<Image>();
         guideFade.color = TitleFade;
-        guideDim = Dim(guideRoot.transform, () => CloseGuide());   // 바깥 클릭으로도 닫힘
-        var d = Design("Design", guideRoot.transform);
-        Spr("Panel", d, "G_Panel").raycastTarget = true;   // 패널 클릭은 닫기로 안 넘어가게
-        Btn("Close", d, "G_Close", () => CloseGuide());
-
-        guideHeader = Label("Header", d, skin.bodyFont, 32, Brown, 0f, 0f, 400f, 44f);
-        guideHeader.alignment = TextAnchor.MiddleLeft;
-        Place(guideHeader.rectTransform, 718f, 373f, 400f, 44f);
-
-        // 1/3 목표
-        pages[0] = Page("Goal", d);
-        Spr("Illustration", pages[0].transform, "G_Illust1");
-        var goal = Loc(Label("Text", pages[0].transform, skin.bodyFont, 26, DarkBrown, 960f, 696.5f, 560f, 90f),
-            "마트 곳곳에 있는 음식을 모아\n<color=#F2737E>101CM</color>까지 성장하세요!",
-            "Collect food all around the mart\nand grow to <color=#F2737E>101CM</color>!");
-        goal.lineSpacing = 1.15f;
-
-        // 2/3 조작 방법
-        pages[1] = Page("Controls", d);
-        Spr("Keys", pages[1].transform, "G_Keys");
-        Loc(Label("MoveCaption", pages[1].transform, skin.bodyFont, 22, Brown, 854f, 676f, 160f, 30f), "이동", "Move");
-        Loc(Label("JumpCaption", pages[1].transform, skin.bodyFont, 22, Brown, 1079f, 580.5f, 160f, 30f), "점프", "Jump");
-        Loc(Label("EatCaption", pages[1].transform, skin.bodyFont, 22, Brown, 1079f, 688.5f, 160f, 30f), "음식 먹기", "Eat");
-
-        // 3/3 게임 규칙
-        pages[2] = Page("Rules", d);
-        Spr("Rows", pages[2].transform, "G_Rules");
-        string[] ko =
-        {
-            "음식을 먹어서 동료 고양이를 데려와요!",
-            "쇼핑카트에 부딪히면 고양이들이 흩어져요. 조심!",
-            "100CM를 달성하면 마지막 고양이가 나타나요!",
-            "무지개 고양이를 데려와 101CM를 달성해서 탈출해요!",
-        };
-        string[] en =
-        {
-            "Eat food to bring friend cats along!",
-            "Hit a shopping cart and your cats scatter!",
-            "Reach 100CM and the last cat appears!",
-            "Bring the rainbow cat to 101CM and escape!",
-        };
-        for (int i = 0; i < 4; i++)
-        {
-            bool last = i == 3;
-            var t = Loc(Label("Rule" + (i + 1), pages[2].transform, skin.bodyFont, last ? 19 : 20, last ? Coral : DarkBrown, 0f, 0f, 440f, 30f), ko[i], en[i]);
-            t.alignment = TextAnchor.MiddleLeft;
-            Place(t.rectTransform, 775f, 497.5f + 62f * i, 440f, 30f);
-        }
-
-        prevButton = Btn("Prev", d, "G_Prev", () => ShowPage(page - 1));
-        prevGroup = prevButton.gameObject.AddComponent<CanvasGroup>();
-        nextButton = Btn("Next", d, "G_Next", () => ShowPage(page + 1));
-        nextGroup = nextButton.gameObject.AddComponent<CanvasGroup>();
-        for (int i = 0; i < 3; i++) dots[i] = Spr("Dot" + (i + 1), d, "G_DotOff");
+        guideDim = Dim(guideRoot.transform, () => CloseGuide());
+        guideDesign = Design("Design", guideRoot.transform);
+        guideArt = FinalImage("Panel", guideDesign);
+        Place(guideArt.rectTransform, 560f, 170f, 800f, 815f);
+        var panelBlocker = FinalImage("PanelClickBlocker", guideDesign);
+        panelBlocker.color = Color.clear;
+        panelBlocker.raycastTarget = true;
+        Place(panelBlocker.rectTransform, 620f, 265f, 680f, 630f);
+        HitArea("Close", guideDesign, 1213f, 294f, 59f, 63f, () => CloseGuide());
+        prevButton = HitArea("Prev", guideDesign, 825f, 801f, 64f, 58f, () => ShowPage(page - 1));
+        nextButton = HitArea("Next", guideDesign, 1030f, 801f, 64f, 58f, () => ShowPage(page + 1));
         guideRoot.SetActive(false);
     }
 
-    // ===== 03-5 설정 (Esc 메뉴 SETTINGS) =====
-    const float SliderX = 843f, SliderW = 278f, SliderY0 = 537.5f, RowStep = 82f;   // 시안 슬라이더 트랙: 843, 537.5(+82), 278x20
+    const float SliderX = 843f, SliderW = 278f, SliderY = 537.5f;
 
-    void BuildSettings(Transform root)
+    void BuildSettings()
     {
-        settingsRoot = FullScreen("Settings", root);
-        Dim(settingsRoot.transform, CloseSettings).color = DimPlay;   // 바깥 클릭으로도 닫힘
-        var d = Design("Design", settingsRoot.transform);
-        Spr("Panel", d, "S_Panel").raycastTarget = true;   // 패널 클릭은 닫기로 안 넘어가게
-        Btn("Close", d, "G_Close", CloseSettings);
+        var d = Design("SettingsControls", guideDesign);
+        settingsRoot = d.gameObject;
+        var patch = new GameObject("VolumeArtworkPatch", typeof(RectTransform), typeof(RawImage));
+        patch.transform.SetParent(d, false);
+        masterArtworkPatch = patch.GetComponent<RawImage>();
+        masterArtworkPatch.raycastTarget = false;
+        Place(masterArtworkPatch.rectTransform, 836f, 520f, 387f, 54f);
+        masterSliderDesign = Design("Slider", d);
+        masterSlider = MakeSlider(masterSliderDesign);
+        masterValue = Label("MasterValue", d, skin.bodyFont, 28, Brown, 0f, 0f, 90f, 35f);
+        masterValue.alignment = TextAnchor.MiddleRight;
+        masterSlider.onReleased = () => { GameAudio.Eat(); GameAudio.SaveVolumes(); };
+        masterSlider.SetValue(GameAudio.MasterVolume);
+        UpdateVolumeTexts();
 
-        var header = Loc(Label("Header", d, skin.bodyFont, 32, Brown, 0f, 0f, 400f, 44f), "사운드", "Sound");
-        header.alignment = TextAnchor.MiddleLeft;
-        Place(header.rectTransform, 718f, 373f, 400f, 44f);
-
-        RowLabel("BgmLabel", d, 528.5f, "배경음악", "Music");
-        RowLabel("SfxLabel", d, 610.5f, "효과음", "Effects");
-        RowLabel("LangLabel", d, 707f, "언어", "Language");
-
-        bgmSlider = MakeSlider("Bgm", d, 0, v => { GameAudio.BgmVolume = v; UpdateVolumeTexts(); });
-        sfxSlider = MakeSlider("Sfx", d, 1, v => { GameAudio.SfxVolume = v; UpdateVolumeTexts(); });
-        bgmValue = ValueLabel("BgmValue", d, 530f);
-        sfxValue = ValueLabel("SfxValue", d, 612f);
-        sfxSlider.onReleased = () => GameAudio.Eat();   // 놓으면 바뀐 효과음 크기로 한 번 들려줌
-
-        // 언어 토글: 시작 화면과 같은 방식 (왼쪽 반 KOR / 오른쪽 반 ENG)
-        settingsLang = Spr("LangToggle", d, "S_LangKOR");
-        const float lx = 843f, ly = 692.5f, lw = 233f, lh = 67f;
-        HitArea("KOR", d, lx, ly, lw * 0.5f, lh, () => SetLanguage(false));
-        HitArea("ENG", d, lx + lw * 0.5f, ly, lw * 0.5f, lh, () => SetLanguage(true));
-
-        settingsRoot.SetActive(false);
+        settingsKoHit = (RectTransform)HitArea("KOR", d, 0f, 0f, 120f, 72f, () => SetLanguage(false)).transform;
+        settingsEnHit = (RectTransform)HitArea("ENG", d, 0f, 0f, 120f, 72f, () => SetLanguage(true)).transform;
     }
 
-    void RowLabel(string name, RectTransform d, float y, string ko, string en)
+    VolumeSlider MakeSlider(RectTransform d)
     {
-        var t = Loc(Label(name, d, skin.bodyFont, 30, Brown, 0f, 0f, 140f, 38f), ko, en);
-        t.alignment = TextAnchor.MiddleLeft;
-        Place(t.rectTransform, 699f, y, 140f, 38f);
-    }
-
-    Text ValueLabel(string name, RectTransform d, float y)
-    {
-        var t = Label(name, d, skin.bodyFont, 28, Brown, 0f, 0f, 90f, 35f);
-        t.alignment = TextAnchor.MiddleRight;
-        Place(t.rectTransform, 1221f - 90f, y, 90f, 35f);
-        return t;
-    }
-
-    /// <summary>row 0 = 배경음악, 1 = 효과음. 스프라이트는 첫 줄 위치로 구워져 있어 row만큼 아래로 옮긴다.</summary>
-    VolumeSlider MakeSlider(string name, RectTransform d, int row, System.Action<float> onChanged)
-    {
-        float dy = RowStep * row, y = SliderY0 + dy;
-        var track = Spr(name + "Track", d, "S_Track");
-        track.rectTransform.anchoredPosition -= new Vector2(0f, dy);
-
-        // 채움: 트랙 왼쪽 끝 기준 마스크 폭 = 값 (HUD 게이지와 같은 방식)
-        var maskGo = new GameObject(name + "FillMask", typeof(RectTransform), typeof(RectMask2D));
+        Spr("MasterTrack", d, "S_Track");
+        var maskGo = new GameObject("MasterFillMask", typeof(RectTransform), typeof(RectMask2D));
         var mask = (RectTransform)maskGo.transform;
         mask.SetParent(d, false);
         mask.anchorMin = mask.anchorMax = new Vector2(0.5f, 0.5f);
         mask.pivot = new Vector2(0f, 0.5f);
-        mask.anchoredPosition = new Vector2(SliderX - 960f, 540f - (y + 10f));
+        mask.anchoredPosition = new Vector2(SliderX - 960f, 540f - (SliderY + 10f));
         mask.sizeDelta = new Vector2(0f, 40f);
-        var fill = Spr(name + "Fill", mask, "S_Fill");
+        var fill = Spr("MasterFill", mask, "S_Fill");
         var fr = FigmaUILayout.Rects["S_Fill"];
         var frt = fill.rectTransform;
         frt.anchorMin = frt.anchorMax = frt.pivot = new Vector2(0f, 0.5f);
-        frt.anchoredPosition = new Vector2(fr.x - SliderX, (SliderY0 + 10f) - (fr.y + fr.height * 0.5f));
+        frt.anchoredPosition = new Vector2(fr.x - SliderX, (SliderY + 10f) - (fr.y + fr.height * 0.5f));
 
-        var knob = Spr(name + "Knob", d, "S_Knob");
-        knob.rectTransform.anchoredPosition -= new Vector2(0f, dy);
-
-        // 누르고 끄는 영역 (트랙 폭 그대로, 위아래로 넉넉히)
-        var hit = new GameObject(name + "Slider", typeof(RectTransform), typeof(Image));
-        var hrt = (RectTransform)hit.transform;
-        hrt.SetParent(d, false);
-        Place(hrt, SliderX, y - 14f, SliderW, 48f);
-        hit.GetComponent<Image>().color = Color.clear;
-        var s = hit.AddComponent<VolumeSlider>();
-        s.track = hrt;
-        s.fillMask = mask;
-        s.knob = knob.rectTransform;
-        s.onChanged = onChanged;
-        return s;
+        var knob = Spr("MasterKnob", d, "S_Knob");
+        var hit = FinalImage("MasterSlider", d);
+        Place(hit.rectTransform, SliderX, SliderY - 14f, SliderW, 48f);
+        hit.color = Color.clear;
+        hit.raycastTarget = true;
+        var slider = hit.gameObject.AddComponent<VolumeSlider>();
+        slider.track = hit.rectTransform;
+        slider.fillMask = mask;
+        slider.knob = knob.rectTransform;
+        slider.onChanged = value => { GameAudio.MasterVolume = value; UpdateVolumeTexts(); };
+        return slider;
     }
 
     // ===== 04 클리어 =====
@@ -541,38 +431,51 @@ public class GameFlowUI : MonoBehaviour
         clearRoot = FullScreen("Clear", root);
         var white = FullScreen("White", clearRoot.transform).AddComponent<Image>();
         white.color = Color.white;
-        Background(clearRoot.transform, "BG_Clear", out var bg);
-        UIMotion.Add(bg.gameObject, UIMotion.Mode.Alpha, UIMotion.Keys(0f, 0.8f, 1.2f, 1f, 2f, 1f));
+        Background(clearRoot.transform, "BG_Clear", out _);
+        // Keep the clear background opaque; the looping fade caused a flash.
         var d = Design("Design", clearRoot.transform);
         Spr("Cats", d, "C_Cats");
-        var title = Spr("Title", d, "C_Title");
-        UIMotion.Add(title.gameObject, UIMotion.Mode.DropIn, null, 1.2f, false);
+        // Figma CLEAR! 텍스트 모션: 글자 6개, 0.1714초 간격, 0.3429초, cubic-bezier(0, 0, 1, 1.273) — 살짝 튕김, 2초 반복
+        LetterTitle("Title", d, "C_Title", 6, 0.17142860f, 0.342857f, new Vector4(0f, 0f, 1f, 1.272999f));
 
-        var settle = UIMotion.Keys(0f, 1.2f, 0.065f, 1.2f, 1.2f, 1f, 2f, 1f);
-        UIMotion.Add(Spr("StarA", d, "C_StarA").gameObject, UIMotion.Mode.Scale, settle);
-        UIMotion.Add(Spr("StarB", d, "C_StarB").gameObject, UIMotion.Mode.Scale, settle);
-        UIMotion.Add(Spr("StarC", d, "C_StarC").gameObject, UIMotion.Mode.Scale, settle);
-        UIMotion.Add(Spr("StarD", d, "C_StarD").gameObject, UIMotion.Mode.Scale, settle);
-        UIMotion.Add(Spr("SparkA", d, "C_SparkA").gameObject, UIMotion.Mode.Scale, UIMotion.Keys(0f, 1f, 0.575f, 1f, 1.2f, 1.15f, 2f, 1.15f));
-        UIMotion.Add(Spr("SparkB", d, "C_SparkB").gameObject, UIMotion.Mode.Scale, UIMotion.Keys(0f, 1f, 0.065f, 1f, 0.79f, 1.15f, 2f, 1.15f));
-        UIMotion.Add(Spr("SparkC", d, "C_SparkC").gameObject, UIMotion.Mode.Scale, UIMotion.Keys(0f, 1f, 0.065f, 1f, 0.7f, 1.15f, 2f, 1.15f));
-        Spr("SparkD", d, "C_SparkD");
+        var starFrom = Vector2.one * 1.2f;
+        foreach (string star in new[] { "StarA", "StarB", "StarC", "StarD" })
+            UIMotion.AddEaseOutScale(Spr(star, d, "C_" + star).gameObject, starFrom, Vector2.one, 0.065f, 1.2f);
+
+        // Polygon 1–4 resize along their own rotated axes. The sprites already contain
+        // the static rotation, so the artwork counter-rotates inside the animated pivot.
+        ClearSpark(d, "C_SparkC", new Vector2(1557.27f, 164.37f), 107.29f, new Vector2(2.333f, 1.575f), 0.256f);
+        ClearSpark(d, "C_SparkD", new Vector2(1545.17f, 182.26f), 59.45f, new Vector2(1.96f, 1.466f), 0.065f);
+        ClearSpark(d, "C_SparkA", new Vector2(368.63f, 356.8f), -27.51f, new Vector2(1.987f, 1.446f), 0.256f);
+        ClearSpark(d, "C_SparkB", new Vector2(372.96f, 332.18f), -60.82f, new Vector2(1.808f, 1.396f), 0.065f);
 
         // 클리어 시간 말풍선 (KO: 클리어 시간 / EN: CLEAR TIME) — 위치는 ApplyLanguage에서
         clearBubble = Spr("Bubble", d, "C_BubbleKO");
+        clearBubble.gameObject.AddComponent<ClearBubbleMotion>();
         var label = Loc(Label("ClearLabel", d, skin.bodyFont, 50, Brown, 1363.5f, 536.5f, 500f, 70f), "클리어 시간", "CLEAR TIME");
         label.horizontalOverflow = HorizontalWrapMode.Overflow;
         clearTime = Label("ClearTime", d, skin.bodyFont, 45, Brown, 1363.5f, 593.5f, 300f, 60f);
         clearTime.text = "00:00";
 
-        Btn("Retry", d, "C_BtnRetry", OnRetry);
-        Btn("Home", d, "C_BtnHome", OnHome);
+        FinalButton("Retry", d, "Retry", 1382.5f, 743f, OnRetry);
+        FinalButton("Home", d, "Home", 1382.5f, 862f, OnHome);
         clearRoot.SetActive(false);
+    }
+
+    void ClearSpark(RectTransform design, string sprite, Vector2 center, float angle, Vector2 endScale, float delay)
+    {
+        var pivot = Design(sprite + "Motion", design);
+        PlaceCenter(pivot, center.x, center.y, 0f, 0f);
+        pivot.localRotation = Quaternion.Euler(0f, 0f, angle);
+
+        var image = Spr(sprite, design, sprite);
+        image.rectTransform.SetParent(pivot, true);
+        UIMotion.AddEaseOutScale(pivot.gameObject, Vector2.one, endScale, delay, 1.2f);
     }
 
 #if UNITY_EDITOR
     /// <summary>에디터 미리보기용: 플레이 없이 Canvas를 만들고 화면 하나만 켠다. screen = title/hud/menu/guide/guide-title/clear</summary>
-    public Canvas EditorPreview(string screen, int guidePage = 0, float progress = 0.5f, int menuFocus = 0, bool english = false)
+    public Canvas EditorPreview(string screen, int guidePage = 0, float progress = 0.5f, bool english = false)
     {
         if (!hudRoot)
         {
@@ -582,21 +485,21 @@ public class GameFlowUI : MonoBehaviour
         bool prevLang = English;
         English = english;
         ApplyLanguage();
-        English = prevLang;
         titleRoot.SetActive(screen == "title" || screen == "guide-title");
         hudRoot.SetActive(screen == "hud" || screen == "menu" || screen == "guide");
         menuRoot.SetActive(screen == "menu");
-        SetMenuFocus(menuFocus);
         guideRoot.SetActive(false);
-        if (screen.StartsWith("guide")) OpenGuide();
+        if (screen.StartsWith("guide") || screen == "settings")
+        {
+            OpenGuide();
+            if (screen != "settings") ShowPage(guidePage);
+        }
         clearRoot.SetActive(screen == "clear");
-        settingsRoot.SetActive(false);
-        if (screen == "settings") OpenSettings();
-        if (guideRoot.activeSelf) ShowPage(guidePage);
         int cm = Mathf.RoundToInt(progress * GameManager.Goal);
         gaugeMask.sizeDelta = new Vector2(718f * progress, gaugeMask.sizeDelta.y);
         cmText.text = $"{cm} / {GameManager.Goal} CM";
         catText.text = english ? "Cats following: 6" : "따라오는 고양이 6마리";
+        English = prevLang;
         return GetComponentInChildren<Canvas>(true);
     }
 #endif
@@ -622,16 +525,6 @@ public class GameFlowUI : MonoBehaviour
         rt.anchorMin = rt.anchorMax = rt.pivot = new Vector2(0.5f, 0.5f);
         rt.sizeDelta = new Vector2(1920f, 1080f);
         return rt;
-    }
-
-    static GameObject Page(string name, RectTransform design)
-    {
-        var go = new GameObject(name, typeof(RectTransform));
-        var rt = (RectTransform)go.transform;
-        rt.SetParent(design, false);
-        rt.anchorMin = rt.anchorMax = rt.pivot = new Vector2(0.5f, 0.5f);
-        rt.sizeDelta = new Vector2(1920f, 1080f);
-        return go;
     }
 
     static Image Dim(Transform parent, UnityEngine.Events.UnityAction onClick)
@@ -694,12 +587,49 @@ public class GameFlowUI : MonoBehaviour
         return img;
     }
 
-    Button Btn(string name, Transform parent, string sprite, UnityEngine.Events.UnityAction onClick)
+    /// <summary>
+    /// 글자별로 움직이는 타이틀(101CM / CLEAR!). 외곽선이 옆 글자 위로 올라오지 않게 층을 나눠 쌓는다:
+    /// 모든 글자의 그림자(Sh) → 외곽선(St) → 글자색(Fi). 한 글자의 세 층은 같은 모션으로 함께 움직인다.
+    /// </summary>
+    void LetterTitle(string name, RectTransform design, string prefix, int count, float stagger, float groupDuration, Vector4 bezier)
     {
-        var img = Spr(name, parent, sprite);
+        var root = new GameObject(name, typeof(RectTransform));
+        var rrt = (RectTransform)root.transform;
+        rrt.SetParent(design, false);
+        rrt.anchorMin = rrt.anchorMax = rrt.pivot = new Vector2(0.5f, 0.5f);
+        rrt.sizeDelta = new Vector2(1920f, 1080f);
+        foreach (var layer in new[] { "Sh", "St", "Fi" })
+            for (int i = 0; i < count; i++)
+                FigmaTextMotion.Add(Spr($"{layer}{i}", rrt, $"{prefix}{i}{layer}").gameObject, i * stagger, groupDuration, bezier);
+    }
+
+    static Sprite FinalArtwork(string asset, bool english)
+    {
+        string locale = english ? "EN" : "KO";
+        return Resources.Load<Sprite>($"FinalFigmaUI/{locale}_{asset}");
+    }
+
+    static Image FinalImage(string name, Transform parent)
+    {
+        var go = new GameObject(name, typeof(RectTransform), typeof(Image));
+        go.transform.SetParent(parent, false);
+        var image = go.GetComponent<Image>();
+        image.raycastTarget = false;
+        return image;
+    }
+
+    void FinalButton(string name, Transform parent, string asset, float cx, float y, UnityEngine.Events.UnityAction onClick)
+    {
+        var art = FinalImage(name, parent);
+        AddButton(art, onClick, true);
+        finalButtons.Add((art, asset, cx, y));
+    }
+
+    static Button AddButton(Image img, UnityEngine.Events.UnityAction onClick, bool animate)
+    {
         img.raycastTarget = true;
         var b = img.gameObject.AddComponent<Button>();
-        b.transition = Selectable.Transition.ColorTint;
+        b.transition = animate ? Selectable.Transition.ColorTint : Selectable.Transition.None;
         var cb = b.colors;
         cb.highlightedColor = new Color(1f, 1f, 1f);
         cb.pressedColor = new Color(0.92f, 0.92f, 0.92f);
@@ -711,22 +641,16 @@ public class GameFlowUI : MonoBehaviour
         b.onClick.AddListener(onClick);
         // 클릭한 버튼이 선택된 채로 남으면 Space(점프)가 버튼을 다시 누르므로 선택 해제
         b.onClick.AddListener(() => { if (EventSystem.current) EventSystem.current.SetSelectedGameObject(null); });
-        img.gameObject.AddComponent<UIButtonFx>();
+        if (animate) img.gameObject.AddComponent<UIButtonFx>();
         return b;
     }
 
-    static void HitArea(string name, Transform parent, float x, float y, float w, float h, UnityEngine.Events.UnityAction onClick)
+    static Button HitArea(string name, Transform parent, float x, float y, float w, float h, UnityEngine.Events.UnityAction onClick)
     {
-        var go = new GameObject(name, typeof(RectTransform), typeof(Image));
-        go.transform.SetParent(parent, false);
-        Place((RectTransform)go.transform, x, y, w, h);
-        go.GetComponent<Image>().color = Color.clear;
-        var b = go.AddComponent<Button>();
-        b.transition = Selectable.Transition.None;
-        b.navigation = new Navigation { mode = Navigation.Mode.None };
-        b.onClick.AddListener(GameAudio.UIClick);
-        b.onClick.AddListener(onClick);
-        b.onClick.AddListener(() => { if (EventSystem.current) EventSystem.current.SetSelectedGameObject(null); });
+        var image = FinalImage(name, parent);
+        Place(image.rectTransform, x, y, w, h);
+        image.color = Color.clear;
+        return AddButton(image, onClick, false);
     }
 
     /// <summary>언어에 따라 바뀌는 글자로 등록. 영어일 때는 Fredoka SemiBold(EN 페이지 폰트).</summary>

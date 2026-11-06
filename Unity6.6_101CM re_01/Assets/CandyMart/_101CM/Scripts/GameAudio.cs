@@ -1,10 +1,10 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// BGM·효과음. 실행 시 자동으로 만들어지고 씬을 다시 불러와도 유지된다 (Resources/Sound).
 /// BGM은 GameManager 상태를 보고 바꾼다: 시작 화면 = Title, 플레이 = Play, 클리어(축하 애니메이션 ~ 클리어 화면) = Ending.
 /// 구간마다 곡이 2개씩 있어 하나가 끝나면 다른 곡으로 넘어간다. 구간이 바뀌면 크로스페이드.
-/// 효과음: UI 버튼 = SFX_Pop_1, 음식 먹기 = SFX_Pop_2/3 중 랜덤 + 음높이 살짝 랜덤.
+/// 효과음: UI 버튼 = SFX_UIClick(SFX_Pop_3 앞 1초), 음식 먹기 = SFX_Pop_2/3 중 랜덤 + 음높이 살짝 랜덤.
 /// </summary>
 public class GameAudio : MonoBehaviour
 {
@@ -16,6 +16,18 @@ public class GameAudio : MonoBehaviour
 
     // 설정 화면 슬라이더 값 (0~1, PlayerPrefs에 저장 — 다음 실행에도 유지)
     const string BgmKey = "101CM_BgmVolume", SfxKey = "101CM_SfxVolume";
+    const string MasterKey = "101CM_MasterVolume";
+    /// <summary>One saved control for music, effects, and currently playing sounds.</summary>
+    public static float MasterVolume
+    {
+        get => Mathf.Clamp01(PlayerPrefs.GetFloat(MasterKey, 1f));
+        set
+        {
+            float volume = Mathf.Clamp01(value);
+            PlayerPrefs.SetFloat(MasterKey, volume);
+            AudioListener.volume = volume;
+        }
+    }
     public static float BgmVolume
     {
         get => I ? I.bgmVolume : PlayerPrefs.GetFloat(BgmKey, 0.5f);
@@ -54,6 +66,7 @@ public class GameAudio : MonoBehaviour
     void Awake()
     {
         I = this;
+        AudioListener.volume = MasterVolume;
         bgmVolume = PlayerPrefs.GetFloat(BgmKey, bgmVolume);
         sfxVolume = PlayerPrefs.GetFloat(SfxKey, sfxVolume);
         bgm = new[]
@@ -62,7 +75,7 @@ public class GameAudio : MonoBehaviour
             Load("BGM_Play_1", "BGM_Play_2"),
             Load("BGM_Ending_1", "BGM_Ending_2"),
         };
-        uiClick = Resources.Load<AudioClip>("Sound/SFX_Pop_1");
+        uiClick = Resources.Load<AudioClip>("Sound/SFX_UIClick");   // SFX_Pop_3 앞 1초
         eat = Load("SFX_Pop_2", "SFX_Pop_3");
 
         for (int i = 0; i < 2; i++)
@@ -141,9 +154,8 @@ public class GameAudio : MonoBehaviour
     // 게임 이벤트 효과음 (Resources/Sound/SFX_<이름>)
     public static void Jump() => PlaySfx("Jump", 0.55f, 0.08f);
     public static void Scatter() => PlaySfx("Scatter", 0.9f, 0.05f);
-    public static void Rejoin() => PlaySfx("Rejoin", 0.8f, 0.04f);
-    public static void LastAppear() => PlaySfx("LastAppear", 1f, 0f);
-    public static void ExitOpen() => PlaySfx("ExitOpen", 1f, 0f);
+    public static void BoxPop() => PlaySfx("BoxPop", 1f, 0.04f);   // 과자 박스 더미가 무너질 때 '팡'
+    public static void ExitOpen() => PlaySfx("LastAppear", 1f, 0f);   // 마지막 1CM 먹고 출구 열릴 때 (SFX_LastAppear)
 
     readonly System.Collections.Generic.Dictionary<string, AudioClip> sfxCache = new System.Collections.Generic.Dictionary<string, AudioClip>();
     AudioSource fxSfx;

@@ -84,7 +84,7 @@ public class MagicBroom : MonoBehaviour
     void Hit(Collider other)
     {
         var gm = GameManager.I;
-        if (!gm || !gm.player || gm.IsWon) return;
+        if (!gm || !gm.player || gm.IsWon || EndingSequence.Running) return;
         if (other.GetComponentInParent<LostKitten>()) return;
         bool isCat = other.GetComponentInParent<CatPlayer>();
         if (!isCat)

@@ -1,0 +1,3588 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1001}
+  m_Layer: 0
+  m_Name: Clouds_Bottom
+  m_TagString: Untagged
+  m_IsActive: 1
+--- !u!4 &1001
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 1000}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -12.1, y: -1.92, z: -17.28}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 2001}
+  - {fileID: 2011}
+  - {fileID: 2021}
+  - {fileID: 2031}
+  - {fileID: 2041}
+  - {fileID: 2051}
+  - {fileID: 2061}
+  - {fileID: 2071}
+  - {fileID: 2081}
+  - {fileID: 2091}
+  - {fileID: 2101}
+  - {fileID: 2111}
+  - {fileID: 2121}
+  - {fileID: 2131}
+  - {fileID: 2141}
+  - {fileID: 2151}
+  - {fileID: 2161}
+  - {fileID: 2171}
+  - {fileID: 2181}
+  - {fileID: 2191}
+  - {fileID: 2201}
+  - {fileID: 2211}
+  - {fileID: 2221}
+  - {fileID: 2231}
+  - {fileID: 2241}
+  - {fileID: 2251}
+  - {fileID: 2261}
+  - {fileID: 2271}
+  - {fileID: 2281}
+  - {fileID: 2291}
+  - {fileID: 2301}
+  - {fileID: 2311}
+  - {fileID: 2321}
+  - {fileID: 2331}
+  - {fileID: 2341}
+  - {fileID: 2351}
+  - {fileID: 2361}
+  - {fileID: 2371}
+  - {fileID: 2381}
+  - {fileID: 2391}
+  - {fileID: 2401}
+  - {fileID: 2411}
+  - {fileID: 2421}
+  - {fileID: 2431}
+  - {fileID: 2441}
+  - {fileID: 2451}
+  - {fileID: 2461}
+  - {fileID: 2471}
+  - {fileID: 2481}
+  - {fileID: 2491}
+  - {fileID: 2501}
+  - {fileID: 2511}
+  - {fileID: 2521}
+  - {fileID: 2531}
+  - {fileID: 2541}
+  - {fileID: 2551}
+  - {fileID: 2561}
+  - {fileID: 2571}
+  - {fileID: 2581}
+  - {fileID: 2591}
+  - {fileID: 2601}
+  - {fileID: 2611}
+  - {fileID: 2621}
+  - {fileID: 2631}
+  - {fileID: 2641}
+  - {fileID: 2651}
+  - {fileID: 2661}
+  - {fileID: 2671}
+  - {fileID: 2681}
+  - {fileID: 2691}
+  - {fileID: 2701}
+  - {fileID: 2711}
+  - {fileID: 2721}
+  - {fileID: 2731}
+  - {fileID: 2741}
+  - {fileID: 2751}
+  - {fileID: 2761}
+  - {fileID: 2771}
+  - {fileID: 2781}
+  - {fileID: 2791}
+  - {fileID: 2801}
+  m_Father: {fileID: 0}
+--- !u!1 &2000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2001}
+  - component: {fileID: 2002}
+  - component: {fileID: 2003}
+  m_Layer: 0
+  m_Name: Cloud_1
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2001
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2000}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -51.5131, y: -0.2337, z: -49.2085}
+  m_LocalScale: {x: 36.2398, y: 26.2042, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2002
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2000}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2003
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2000}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 75cff02c53174fd2a08fce3bb9206813, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2010
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2011}
+  - component: {fileID: 2012}
+  - component: {fileID: 2013}
+  m_Layer: 0
+  m_Name: Cloud_2
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2011
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2010}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -40.7129, y: -0.2660, z: -53.2689}
+  m_LocalScale: {x: 33.9242, y: 23.9114, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2012
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2010}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2013
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2010}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: c262e7b95aa04f30816ca18869e53b02, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2020
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2021}
+  - component: {fileID: 2022}
+  - component: {fileID: 2023}
+  m_Layer: 0
+  m_Name: Cloud_3
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2021
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2020}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -28.5779, y: -0.2319, z: -54.4668}
+  m_LocalScale: {x: 34.6989, y: 25.2986, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2022
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2020}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2023
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2020}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: c262e7b95aa04f30816ca18869e53b02, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2030
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2031}
+  - component: {fileID: 2032}
+  - component: {fileID: 2033}
+  m_Layer: 0
+  m_Name: Cloud_4
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2031
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2030}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -11.2823, y: -0.2866, z: -50.2528}
+  m_LocalScale: {x: 31.2230, y: 22.5661, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2032
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2030}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2033
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2030}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: c262e7b95aa04f30816ca18869e53b02, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2040
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2041}
+  - component: {fileID: 2042}
+  - component: {fileID: 2043}
+  m_Layer: 0
+  m_Name: Cloud_5
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2041
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2040}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -1.1743, y: -0.1330, z: -50.0597}
+  m_LocalScale: {x: 33.8015, y: 27.9831, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2042
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2040}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2043
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2040}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 939172664bc34d0293143f0caaad6daa, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2050
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2051}
+  - component: {fileID: 2052}
+  - component: {fileID: 2053}
+  m_Layer: 0
+  m_Name: Cloud_6
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2051
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2050}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 12.3679, y: -0.4551, z: -52.4622}
+  m_LocalScale: {x: 31.0455, y: 28.0204, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2052
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2050}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2053
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2050}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 0d0f6c67c2ee4a44a16618128f8a84c8, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2060
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2061}
+  - component: {fileID: 2062}
+  - component: {fileID: 2063}
+  m_Layer: 0
+  m_Name: Cloud_7
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2061
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2060}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 28.2310, y: -0.2600, z: -54.4318}
+  m_LocalScale: {x: 34.9561, y: 25.3381, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2062
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2060}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2063
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2060}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 939172664bc34d0293143f0caaad6daa, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2070
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2071}
+  - component: {fileID: 2072}
+  - component: {fileID: 2073}
+  m_Layer: 0
+  m_Name: Cloud_8
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2071
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2070}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 36.0567, y: -0.6773, z: -54.0798}
+  m_LocalScale: {x: 27.3458, y: 23.6276, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2072
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2070}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2073
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2070}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 0d0f6c67c2ee4a44a16618128f8a84c8, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2080
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2081}
+  - component: {fileID: 2082}
+  - component: {fileID: 2083}
+  m_Layer: 0
+  m_Name: Cloud_9
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2081
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2080}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 53.5816, y: -0.4856, z: -49.0546}
+  m_LocalScale: {x: 35.2812, y: 30.0677, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2082
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2080}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2083
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2080}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 75cff02c53174fd2a08fce3bb9206813, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2090
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2091}
+  - component: {fileID: 2092}
+  - component: {fileID: 2093}
+  m_Layer: 0
+  m_Name: Cloud_10
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2091
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2090}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -52.1492, y: -0.5981, z: -36.7446}
+  m_LocalScale: {x: 30.1129, y: 29.8299, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2092
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2090}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2093
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2090}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 75cff02c53174fd2a08fce3bb9206813, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2100
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2101}
+  - component: {fileID: 2102}
+  - component: {fileID: 2103}
+  m_Layer: 0
+  m_Name: Cloud_11
+  m_TagString: Untagged
+  m_IsActive: 1
+--- !u!4 &2101
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2100}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -48, y: -0.20, z: -48}
+  m_LocalScale: {x: 76, y: 64, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2102
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2100}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2103
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2100}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: c262e7b95aa04f30816ca18869e53b02, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2110
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2111}
+  - component: {fileID: 2112}
+  - component: {fileID: 2113}
+  m_Layer: 0
+  m_Name: Cloud_12
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2111
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2110}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -23.9685, y: -0.1426, z: -37.7657}
+  m_LocalScale: {x: 34.7448, y: 29.2833, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2112
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2110}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2113
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2110}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 8ff5336b7d7748edaec23fbafd0da608, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2120
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2121}
+  - component: {fileID: 2122}
+  - component: {fileID: 2123}
+  m_Layer: 0
+  m_Name: Cloud_13
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2121
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2120}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -11.8854, y: -1.1093, z: -40.7948}
+  m_LocalScale: {x: 36.3292, y: 26.9260, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2122
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2120}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2123
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2120}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 8ff5336b7d7748edaec23fbafd0da608, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2130
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2131}
+  - component: {fileID: 2132}
+  - component: {fileID: 2133}
+  m_Layer: 0
+  m_Name: Cloud_14
+  m_TagString: Untagged
+  m_IsActive: 1
+--- !u!4 &2131
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2130}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: -0.20, z: -48}
+  m_LocalScale: {x: 76, y: 64, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2132
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2130}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2133
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2130}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 75cff02c53174fd2a08fce3bb9206813, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2140
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2141}
+  - component: {fileID: 2142}
+  - component: {fileID: 2143}
+  m_Layer: 0
+  m_Name: Cloud_15
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2141
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2140}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 14.1352, y: -0.4204, z: -41.6550}
+  m_LocalScale: {x: 29.7867, y: 29.4205, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2142
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2140}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2143
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2140}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 0d0f6c67c2ee4a44a16618128f8a84c8, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2150
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2151}
+  - component: {fileID: 2152}
+  - component: {fileID: 2153}
+  m_Layer: 0
+  m_Name: Cloud_16
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2151
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2150}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 24.6807, y: -0.1849, z: -39.2033}
+  m_LocalScale: {x: 31.2498, y: 26.7195, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2152
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2150}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2153
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2150}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 939172664bc34d0293143f0caaad6daa, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2160
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2161}
+  - component: {fileID: 2162}
+  - component: {fileID: 2163}
+  m_Layer: 0
+  m_Name: Cloud_17
+  m_TagString: Untagged
+  m_IsActive: 1
+--- !u!4 &2161
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2160}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 48, y: -0.20, z: -48}
+  m_LocalScale: {x: 76, y: 64, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2162
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2160}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2163
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2160}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: c262e7b95aa04f30816ca18869e53b02, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2170
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2171}
+  - component: {fileID: 2172}
+  - component: {fileID: 2173}
+  m_Layer: 0
+  m_Name: Cloud_18
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2171
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2170}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 54.1403, y: -0.5506, z: -38.5837}
+  m_LocalScale: {x: 35.0427, y: 24.1467, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2172
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2170}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2173
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2170}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 939172664bc34d0293143f0caaad6daa, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2180
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2181}
+  - component: {fileID: 2182}
+  - component: {fileID: 2183}
+  m_Layer: 0
+  m_Name: Cloud_19
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2181
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2180}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -52.1725, y: -0.2349, z: -25.4413}
+  m_LocalScale: {x: 30.1536, y: 22.1667, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2182
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2180}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2183
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2180}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 8ff5336b7d7748edaec23fbafd0da608, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2190
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2191}
+  - component: {fileID: 2192}
+  - component: {fileID: 2193}
+  m_Layer: 0
+  m_Name: Cloud_20
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2191
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2190}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -40.2711, y: -0.8147, z: -23.6350}
+  m_LocalScale: {x: 31.0080, y: 22.4890, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2192
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2190}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2193
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2190}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 8ff5336b7d7748edaec23fbafd0da608, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2200
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2201}
+  - component: {fileID: 2202}
+  - component: {fileID: 2203}
+  m_Layer: 0
+  m_Name: Cloud_21
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2201
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2200}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -25.9019, y: -0.2594, z: -25.0104}
+  m_LocalScale: {x: 28.4585, y: 23.0928, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2202
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2200}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2203
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2200}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 0d0f6c67c2ee4a44a16618128f8a84c8, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2210
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2211}
+  - component: {fileID: 2212}
+  - component: {fileID: 2213}
+  m_Layer: 0
+  m_Name: Cloud_22
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2211
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2210}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -13.3157, y: -0.7981, z: -24.9398}
+  m_LocalScale: {x: 33.8724, y: 25.2792, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2212
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2210}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2213
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2210}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 75cff02c53174fd2a08fce3bb9206813, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2220
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2221}
+  - component: {fileID: 2222}
+  - component: {fileID: 2223}
+  m_Layer: 0
+  m_Name: Cloud_23
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2221
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2220}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -1.7465, y: -0.5501, z: -25.6633}
+  m_LocalScale: {x: 30.0021, y: 24.7101, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2222
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2220}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2223
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2220}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 939172664bc34d0293143f0caaad6daa, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2230
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2231}
+  - component: {fileID: 2232}
+  - component: {fileID: 2233}
+  m_Layer: 0
+  m_Name: Cloud_24
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2231
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2230}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 11.4443, y: -0.5222, z: -26.2706}
+  m_LocalScale: {x: 29.9689, y: 22.3646, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2232
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2230}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2233
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2230}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 0d0f6c67c2ee4a44a16618128f8a84c8, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2240
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2241}
+  - component: {fileID: 2242}
+  - component: {fileID: 2243}
+  m_Layer: 0
+  m_Name: Cloud_25
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2241
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2240}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 26.4690, y: -0.4111, z: -23.7269}
+  m_LocalScale: {x: 31.3852, y: 22.4646, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2242
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2240}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2243
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2240}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 75cff02c53174fd2a08fce3bb9206813, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2250
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2251}
+  - component: {fileID: 2252}
+  - component: {fileID: 2253}
+  m_Layer: 0
+  m_Name: Cloud_26
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2251
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2250}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 40.2623, y: -1.1410, z: -24.3607}
+  m_LocalScale: {x: 31.6516, y: 30.8520, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2252
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2250}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2253
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2250}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 0d0f6c67c2ee4a44a16618128f8a84c8, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2260
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2261}
+  - component: {fileID: 2262}
+  - component: {fileID: 2263}
+  m_Layer: 0
+  m_Name: Cloud_27
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2261
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2260}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 49.0795, y: -1.1129, z: -24.9963}
+  m_LocalScale: {x: 34.7004, y: 30.5897, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2262
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2260}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2263
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2260}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: c262e7b95aa04f30816ca18869e53b02, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2270
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2271}
+  - component: {fileID: 2272}
+  - component: {fileID: 2273}
+  m_Layer: 0
+  m_Name: Cloud_28
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2271
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2270}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -50.5171, y: -1.0292, z: -15.6305}
+  m_LocalScale: {x: 33.9211, y: 24.3938, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2272
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2270}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2273
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2270}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 0d0f6c67c2ee4a44a16618128f8a84c8, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2280
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2281}
+  - component: {fileID: 2282}
+  - component: {fileID: 2283}
+  m_Layer: 0
+  m_Name: Cloud_29
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2281
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2280}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -37.8528, y: -1.1720, z: -11.2116}
+  m_LocalScale: {x: 30.3896, y: 28.5703, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2282
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2280}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2283
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2280}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 8ff5336b7d7748edaec23fbafd0da608, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2290
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2291}
+  - component: {fileID: 2292}
+  - component: {fileID: 2293}
+  m_Layer: 0
+  m_Name: Cloud_30
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2291
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2290}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -26.1826, y: -1.1702, z: -15.3481}
+  m_LocalScale: {x: 27.0639, y: 25.2130, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2292
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2290}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2293
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2290}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 75cff02c53174fd2a08fce3bb9206813, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2300
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2301}
+  - component: {fileID: 2302}
+  - component: {fileID: 2303}
+  m_Layer: 0
+  m_Name: Cloud_31
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2301
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2300}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -15.4234, y: -0.2788, z: -14.8463}
+  m_LocalScale: {x: 28.5805, y: 28.5700, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2302
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2300}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2303
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2300}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 75cff02c53174fd2a08fce3bb9206813, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2310
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2311}
+  - component: {fileID: 2312}
+  - component: {fileID: 2313}
+  m_Layer: 0
+  m_Name: Cloud_32
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2311
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2310}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 1.6935, y: -0.8871, z: -14.8486}
+  m_LocalScale: {x: 28.3698, y: 30.8707, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2312
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2310}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2313
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2310}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 75cff02c53174fd2a08fce3bb9206813, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2320
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2321}
+  - component: {fileID: 2322}
+  - component: {fileID: 2323}
+  m_Layer: 0
+  m_Name: Cloud_33
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2321
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2320}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 15.6513, y: -0.9533, z: -11.8996}
+  m_LocalScale: {x: 35.8027, y: 22.9451, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2322
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2320}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2323
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2320}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 75cff02c53174fd2a08fce3bb9206813, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2330
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2331}
+  - component: {fileID: 2332}
+  - component: {fileID: 2333}
+  m_Layer: 0
+  m_Name: Cloud_34
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2331
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2330}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 28.6084, y: -0.3996, z: -10.4137}
+  m_LocalScale: {x: 36.0381, y: 27.1920, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2332
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2330}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2333
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2330}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: c262e7b95aa04f30816ca18869e53b02, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2340
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2341}
+  - component: {fileID: 2342}
+  - component: {fileID: 2343}
+  m_Layer: 0
+  m_Name: Cloud_35
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2341
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2340}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 41.4457, y: -0.1316, z: -10.0701}
+  m_LocalScale: {x: 31.4835, y: 27.1364, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2342
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2340}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2343
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2340}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 75cff02c53174fd2a08fce3bb9206813, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2350
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2351}
+  - component: {fileID: 2352}
+  - component: {fileID: 2353}
+  m_Layer: 0
+  m_Name: Cloud_36
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2351
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2350}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 52.6149, y: -1.1925, z: -13.5825}
+  m_LocalScale: {x: 28.3391, y: 22.5363, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2352
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2350}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2353
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2350}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 939172664bc34d0293143f0caaad6daa, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2360
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2361}
+  - component: {fileID: 2362}
+  - component: {fileID: 2363}
+  m_Layer: 0
+  m_Name: Cloud_37
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2361
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2360}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -50.8926, y: -0.0742, z: -2.4222}
+  m_LocalScale: {x: 29.8822, y: 23.4920, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2362
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2360}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2363
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2360}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: c262e7b95aa04f30816ca18869e53b02, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2370
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2371}
+  - component: {fileID: 2372}
+  - component: {fileID: 2373}
+  m_Layer: 0
+  m_Name: Cloud_38
+  m_TagString: Untagged
+  m_IsActive: 1
+--- !u!4 &2371
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2370}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -48, y: -0.20, z: 0}
+  m_LocalScale: {x: 76, y: 64, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2372
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2370}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2373
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2370}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 939172664bc34d0293143f0caaad6daa, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2380
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2381}
+  - component: {fileID: 2382}
+  - component: {fileID: 2383}
+  m_Layer: 0
+  m_Name: Cloud_39
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2381
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2380}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -24.8176, y: -0.2882, z: -0.6642}
+  m_LocalScale: {x: 29.4153, y: 24.1888, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2382
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2380}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2383
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2380}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: c262e7b95aa04f30816ca18869e53b02, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2390
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2391}
+  - component: {fileID: 2392}
+  - component: {fileID: 2393}
+  m_Layer: 0
+  m_Name: Cloud_40
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2391
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2390}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -15.0929, y: -0.1971, z: -0.3658}
+  m_LocalScale: {x: 36.2573, y: 29.9551, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2392
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2390}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2393
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2390}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 0d0f6c67c2ee4a44a16618128f8a84c8, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2400
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2401}
+  - component: {fileID: 2402}
+  - component: {fileID: 2403}
+  m_Layer: 0
+  m_Name: Cloud_41
+  m_TagString: Untagged
+  m_IsActive: 1
+--- !u!4 &2401
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2400}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: -0.20, z: 0}
+  m_LocalScale: {x: 76, y: 64, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2402
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2400}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2403
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2400}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 0d0f6c67c2ee4a44a16618128f8a84c8, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2410
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2411}
+  - component: {fileID: 2412}
+  - component: {fileID: 2413}
+  m_Layer: 0
+  m_Name: Cloud_42
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2411
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2410}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 14.5365, y: -0.4502, z: -1.4733}
+  m_LocalScale: {x: 35.2225, y: 28.5052, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2412
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2410}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2413
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2410}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 75cff02c53174fd2a08fce3bb9206813, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2420
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2421}
+  - component: {fileID: 2422}
+  - component: {fileID: 2423}
+  m_Layer: 0
+  m_Name: Cloud_43
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2421
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2420}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 25.2159, y: -0.9507, z: 2.6308}
+  m_LocalScale: {x: 33.1709, y: 30.8169, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2422
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2420}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2423
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2420}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 0d0f6c67c2ee4a44a16618128f8a84c8, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2430
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2431}
+  - component: {fileID: 2432}
+  - component: {fileID: 2433}
+  m_Layer: 0
+  m_Name: Cloud_44
+  m_TagString: Untagged
+  m_IsActive: 1
+--- !u!4 &2431
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2430}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 48, y: -0.20, z: 0}
+  m_LocalScale: {x: 76, y: 64, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2432
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2430}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2433
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2430}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 0d0f6c67c2ee4a44a16618128f8a84c8, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2440
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2441}
+  - component: {fileID: 2442}
+  - component: {fileID: 2443}
+  m_Layer: 0
+  m_Name: Cloud_45
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2441
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2440}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 54.1131, y: -0.4612, z: -0.8761}
+  m_LocalScale: {x: 29.3178, y: 25.4190, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2442
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2440}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2443
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2440}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: c262e7b95aa04f30816ca18869e53b02, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2450
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2451}
+  - component: {fileID: 2452}
+  - component: {fileID: 2453}
+  m_Layer: 0
+  m_Name: Cloud_46
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2451
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2450}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -49.0831, y: -1.0023, z: 15.5008}
+  m_LocalScale: {x: 28.8634, y: 28.1891, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2452
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2450}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2453
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2450}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: c262e7b95aa04f30816ca18869e53b02, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2460
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2461}
+  - component: {fileID: 2462}
+  - component: {fileID: 2463}
+  m_Layer: 0
+  m_Name: Cloud_47
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2461
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2460}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -40.3821, y: -1.1650, z: 14.3698}
+  m_LocalScale: {x: 33.8433, y: 24.5609, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2462
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2460}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2463
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2460}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: c262e7b95aa04f30816ca18869e53b02, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2470
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2471}
+  - component: {fileID: 2472}
+  - component: {fileID: 2473}
+  m_Layer: 0
+  m_Name: Cloud_48
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2471
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2470}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -28.1715, y: -0.1971, z: 13.9820}
+  m_LocalScale: {x: 29.9722, y: 24.0808, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2472
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2470}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2473
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2470}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 75cff02c53174fd2a08fce3bb9206813, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2480
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2481}
+  - component: {fileID: 2482}
+  - component: {fileID: 2483}
+  m_Layer: 0
+  m_Name: Cloud_49
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2481
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2480}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -15.7195, y: -0.6365, z: 14.2780}
+  m_LocalScale: {x: 27.1070, y: 28.2670, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2482
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2480}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2483
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2480}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 939172664bc34d0293143f0caaad6daa, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2490
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2491}
+  - component: {fileID: 2492}
+  - component: {fileID: 2493}
+  m_Layer: 0
+  m_Name: Cloud_50
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2491
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2490}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -0.2586, y: -0.4475, z: 11.7332}
+  m_LocalScale: {x: 30.6495, y: 26.3196, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2492
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2490}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2493
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2490}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 8ff5336b7d7748edaec23fbafd0da608, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2500
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2501}
+  - component: {fileID: 2502}
+  - component: {fileID: 2503}
+  m_Layer: 0
+  m_Name: Cloud_51
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2501
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2500}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 14.6210, y: -0.8913, z: 12.3316}
+  m_LocalScale: {x: 33.2138, y: 26.3342, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2502
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2500}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2503
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2500}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 75cff02c53174fd2a08fce3bb9206813, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2510
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2511}
+  - component: {fileID: 2512}
+  - component: {fileID: 2513}
+  m_Layer: 0
+  m_Name: Cloud_52
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2511
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2510}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 23.3675, y: -0.8124, z: 11.6319}
+  m_LocalScale: {x: 30.4574, y: 25.4400, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2512
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2510}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2513
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2510}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 0d0f6c67c2ee4a44a16618128f8a84c8, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2520
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2521}
+  - component: {fileID: 2522}
+  - component: {fileID: 2523}
+  m_Layer: 0
+  m_Name: Cloud_53
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2521
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2520}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 39.3285, y: -0.2804, z: 14.5341}
+  m_LocalScale: {x: 36.9998, y: 26.8490, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2522
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2520}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2523
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2520}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: c262e7b95aa04f30816ca18869e53b02, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2530
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2531}
+  - component: {fileID: 2532}
+  - component: {fileID: 2533}
+  m_Layer: 0
+  m_Name: Cloud_54
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2531
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2530}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 53.4392, y: -0.9155, z: 15.4697}
+  m_LocalScale: {x: 27.5450, y: 28.6708, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2532
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2530}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2533
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2530}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 75cff02c53174fd2a08fce3bb9206813, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2540
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2541}
+  - component: {fileID: 2542}
+  - component: {fileID: 2543}
+  m_Layer: 0
+  m_Name: Cloud_55
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2541
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2540}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -54.3808, y: -0.2043, z: 27.9213}
+  m_LocalScale: {x: 28.5831, y: 23.1362, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2542
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2540}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2543
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2540}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 939172664bc34d0293143f0caaad6daa, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2550
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2551}
+  - component: {fileID: 2552}
+  - component: {fileID: 2553}
+  m_Layer: 0
+  m_Name: Cloud_56
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2551
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2550}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -38.8253, y: -0.6983, z: 27.0619}
+  m_LocalScale: {x: 29.4656, y: 27.0687, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2552
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2550}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2553
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2550}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 0d0f6c67c2ee4a44a16618128f8a84c8, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2560
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2561}
+  - component: {fileID: 2562}
+  - component: {fileID: 2563}
+  m_Layer: 0
+  m_Name: Cloud_57
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2561
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2560}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -27.8422, y: -0.0613, z: 24.1263}
+  m_LocalScale: {x: 31.7632, y: 27.4544, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2562
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2560}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2563
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2560}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: c262e7b95aa04f30816ca18869e53b02, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2570
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2571}
+  - component: {fileID: 2572}
+  - component: {fileID: 2573}
+  m_Layer: 0
+  m_Name: Cloud_58
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2571
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2570}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -13.0009, y: -0.3660, z: 23.8431}
+  m_LocalScale: {x: 28.5856, y: 25.8216, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2572
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2570}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2573
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2570}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 0d0f6c67c2ee4a44a16618128f8a84c8, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2580
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2581}
+  - component: {fileID: 2582}
+  - component: {fileID: 2583}
+  m_Layer: 0
+  m_Name: Cloud_59
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2581
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2580}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -1.9721, y: -0.9671, z: 23.4479}
+  m_LocalScale: {x: 29.5081, y: 28.0179, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2582
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2580}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2583
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2580}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 0d0f6c67c2ee4a44a16618128f8a84c8, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2590
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2591}
+  - component: {fileID: 2592}
+  - component: {fileID: 2593}
+  m_Layer: 0
+  m_Name: Cloud_60
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2591
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2590}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 15.9072, y: -0.0450, z: 24.6017}
+  m_LocalScale: {x: 36.3496, y: 27.7024, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2592
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2590}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2593
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2590}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: c262e7b95aa04f30816ca18869e53b02, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2600
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2601}
+  - component: {fileID: 2602}
+  - component: {fileID: 2603}
+  m_Layer: 0
+  m_Name: Cloud_61
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2601
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2600}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 24.4764, y: -1.0350, z: 24.9231}
+  m_LocalScale: {x: 34.7269, y: 27.2281, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2602
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2600}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2603
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2600}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 939172664bc34d0293143f0caaad6daa, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2610
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2611}
+  - component: {fileID: 2612}
+  - component: {fileID: 2613}
+  m_Layer: 0
+  m_Name: Cloud_62
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2611
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2610}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 41.6388, y: -1.0243, z: 25.3074}
+  m_LocalScale: {x: 29.2602, y: 24.7149, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2612
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2610}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2613
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2610}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 939172664bc34d0293143f0caaad6daa, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2620
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2621}
+  - component: {fileID: 2622}
+  - component: {fileID: 2623}
+  m_Layer: 0
+  m_Name: Cloud_63
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2621
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2620}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 52.0981, y: -0.5067, z: 27.7438}
+  m_LocalScale: {x: 33.6040, y: 23.3104, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2622
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2620}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2623
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2620}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 0d0f6c67c2ee4a44a16618128f8a84c8, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2630
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2631}
+  - component: {fileID: 2632}
+  - component: {fileID: 2633}
+  m_Layer: 0
+  m_Name: Cloud_64
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2631
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2630}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -52.7341, y: -0.6333, z: 40.9429}
+  m_LocalScale: {x: 34.8017, y: 23.6254, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2632
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2630}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2633
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2630}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 8ff5336b7d7748edaec23fbafd0da608, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2640
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2641}
+  - component: {fileID: 2642}
+  - component: {fileID: 2643}
+  m_Layer: 0
+  m_Name: Cloud_65
+  m_TagString: Untagged
+  m_IsActive: 1
+--- !u!4 &2641
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2640}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -48, y: -0.20, z: 48}
+  m_LocalScale: {x: 76, y: 64, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2642
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2640}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2643
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2640}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: c262e7b95aa04f30816ca18869e53b02, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2650
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2651}
+  - component: {fileID: 2652}
+  - component: {fileID: 2653}
+  m_Layer: 0
+  m_Name: Cloud_66
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2651
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2650}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -23.7392, y: -0.0139, z: 37.0528}
+  m_LocalScale: {x: 28.2841, y: 27.3622, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2652
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2650}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2653
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2650}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: c262e7b95aa04f30816ca18869e53b02, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2660
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2661}
+  - component: {fileID: 2662}
+  - component: {fileID: 2663}
+  m_Layer: 0
+  m_Name: Cloud_67
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2661
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2660}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -15.6341, y: -0.8519, z: 38.1248}
+  m_LocalScale: {x: 27.8191, y: 23.5934, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2662
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2660}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2663
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2660}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 75cff02c53174fd2a08fce3bb9206813, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2670
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2671}
+  - component: {fileID: 2672}
+  - component: {fileID: 2673}
+  m_Layer: 0
+  m_Name: Cloud_68
+  m_TagString: Untagged
+  m_IsActive: 1
+--- !u!4 &2671
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2670}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: -0.20, z: 48}
+  m_LocalScale: {x: 76, y: 64, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2672
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2670}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2673
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2670}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 939172664bc34d0293143f0caaad6daa, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2680
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2681}
+  - component: {fileID: 2682}
+  - component: {fileID: 2683}
+  m_Layer: 0
+  m_Name: Cloud_69
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2681
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2680}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 15.9944, y: -0.6049, z: 40.7743}
+  m_LocalScale: {x: 33.4119, y: 29.5031, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2682
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2680}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2683
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2680}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 75cff02c53174fd2a08fce3bb9206813, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2690
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2691}
+  - component: {fileID: 2692}
+  - component: {fileID: 2693}
+  m_Layer: 0
+  m_Name: Cloud_70
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2691
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2690}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 25.9046, y: -0.1805, z: 40.8566}
+  m_LocalScale: {x: 28.7268, y: 26.4636, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2692
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2690}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2693
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2690}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 8ff5336b7d7748edaec23fbafd0da608, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2700
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2701}
+  - component: {fileID: 2702}
+  - component: {fileID: 2703}
+  m_Layer: 0
+  m_Name: Cloud_71
+  m_TagString: Untagged
+  m_IsActive: 1
+--- !u!4 &2701
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2700}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 48, y: -0.20, z: 48}
+  m_LocalScale: {x: 76, y: 64, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2702
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2700}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2703
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2700}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 0d0f6c67c2ee4a44a16618128f8a84c8, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2710
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2711}
+  - component: {fileID: 2712}
+  - component: {fileID: 2713}
+  m_Layer: 0
+  m_Name: Cloud_72
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2711
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2710}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 53.1746, y: -0.4173, z: 36.2363}
+  m_LocalScale: {x: 27.7228, y: 25.1285, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2712
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2710}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2713
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2710}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 939172664bc34d0293143f0caaad6daa, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2720
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2721}
+  - component: {fileID: 2722}
+  - component: {fileID: 2723}
+  m_Layer: 0
+  m_Name: Cloud_73
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2721
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2720}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -49.1944, y: -0.0700, z: 53.7526}
+  m_LocalScale: {x: 31.6828, y: 24.6986, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2722
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2720}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2723
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2720}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 939172664bc34d0293143f0caaad6daa, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2730
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2731}
+  - component: {fileID: 2732}
+  - component: {fileID: 2733}
+  m_Layer: 0
+  m_Name: Cloud_74
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2731
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2730}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -37.2093, y: -0.2091, z: 52.2197}
+  m_LocalScale: {x: 36.0489, y: 23.2172, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2732
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2730}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2733
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2730}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 75cff02c53174fd2a08fce3bb9206813, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2740
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2741}
+  - component: {fileID: 2742}
+  - component: {fileID: 2743}
+  m_Layer: 0
+  m_Name: Cloud_75
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2741
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2740}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -27.2891, y: -0.9398, z: 52.4875}
+  m_LocalScale: {x: 35.8442, y: 23.2973, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2742
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2740}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2743
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2740}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 75cff02c53174fd2a08fce3bb9206813, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2750
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2751}
+  - component: {fileID: 2752}
+  - component: {fileID: 2753}
+  m_Layer: 0
+  m_Name: Cloud_76
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2751
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2750}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -15.8329, y: -0.2203, z: 51.4882}
+  m_LocalScale: {x: 30.1316, y: 24.5438, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2752
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2750}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2753
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2750}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 75cff02c53174fd2a08fce3bb9206813, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2760
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2761}
+  - component: {fileID: 2762}
+  - component: {fileID: 2763}
+  m_Layer: 0
+  m_Name: Cloud_77
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2761
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2760}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -0.9774, y: -0.1747, z: 53.0297}
+  m_LocalScale: {x: 32.1794, y: 30.0305, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2762
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2760}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2763
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2760}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: c262e7b95aa04f30816ca18869e53b02, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2770
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2771}
+  - component: {fileID: 2772}
+  - component: {fileID: 2773}
+  m_Layer: 0
+  m_Name: Cloud_78
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2771
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2770}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 15.9873, y: -0.0284, z: 51.2256}
+  m_LocalScale: {x: 35.2527, y: 24.1171, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2772
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2770}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2773
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2770}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 939172664bc34d0293143f0caaad6daa, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2780
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2781}
+  - component: {fileID: 2782}
+  - component: {fileID: 2783}
+  m_Layer: 0
+  m_Name: Cloud_79
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2781
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2780}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 27.6924, y: -0.0894, z: 53.0905}
+  m_LocalScale: {x: 30.0920, y: 24.7688, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2782
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2780}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2783
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2780}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 939172664bc34d0293143f0caaad6daa, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2790
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2791}
+  - component: {fileID: 2792}
+  - component: {fileID: 2793}
+  m_Layer: 0
+  m_Name: Cloud_80
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2791
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2790}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 36.9128, y: -0.0217, z: 50.3263}
+  m_LocalScale: {x: 34.0270, y: 26.7575, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2792
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2790}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2793
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2790}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: 939172664bc34d0293143f0caaad6daa, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!1 &2800
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2801}
+  - component: {fileID: 2802}
+  - component: {fileID: 2803}
+  m_Layer: 0
+  m_Name: Cloud_81
+  m_TagString: Untagged
+  m_IsActive: 0
+--- !u!4 &2801
+Transform:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2800}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 52.7949, y: -0.4786, z: 51.7603}
+  m_LocalScale: {x: 34.5866, y: 25.6077, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1001}
+--- !u!33 &2802
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2800}
+  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &2803
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_GameObject: {fileID: 2800}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RenderingLayerMask: 1
+  m_Materials:
+  - {fileID: 2100000, guid: c262e7b95aa04f30816ca18869e53b02, type: 2}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0

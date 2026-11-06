@@ -744,6 +744,9 @@ def arm_remap(bone, v):
     return [x * fw, y, z]
 
 
+OFFSTAGE_R = 20.0   # island is ~8 m across; anything further out is a parked, waiting cat
+
+
 def _lin(keys, f):
     """Linear interpolation of sorted (frame, value) keys."""
     if f <= keys[0][0]:
@@ -782,6 +785,9 @@ def bake_cat(track, mover, arm, f_end, tag, smooth_z=0.35, bone_step=2, extra=No
     # drop channels that never move
     bones = {k: v for k, v in bones.items() if max(abs(x[1]) for x in v) > 1e-4}
     sq = [track.squash(f) for f in range(1, f_end + 1)]
+    # cats waiting off-stage (parked ~60 m out) get scale 0 so wide shots can't catch them
+    off = [V2((x[1], y[1])).length > OFFSTAGE_R for x, y in zip(mv[("location", 0)], mv[("location", 1)])]
+    sq = [0.0 if o else v for v, o in zip(sq, off)]
     extra = dict(extra or {})
     if any(abs(v - 1) > 1e-4 for v in sq):
         # volume-preserving squash on the Mover (origin = feet), multiplied into any extra scale keys
@@ -790,7 +796,7 @@ def bake_cat(track, mover, arm, f_end, tag, smooth_z=0.35, bone_step=2, extra=No
             vals = []
             for f, v in zip(range(1, f_end + 1), sq):
                 b = _lin(base, f) if base else 1.0
-                vals.append((f, b * (v if i == 2 else 1 / math.sqrt(v))))
+                vals.append((f, b * (v if i == 2 or v == 0 else 1 / math.sqrt(v))))
             mv[("scale", i)] = vals
     if extra:
         mv.update(extra)
@@ -1035,7 +1041,7 @@ def gradient_world(name, zenith, horizon, ground, strength=1.0):
 
 
 SKY_IMG = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-                       "HDRI", "Sky_Anime_02_dusk_a.png")   # same panorama as the Unity skybox
+                       "HDRI", "Sky_Serenity_RoseQuartz.png")   # Unity skybox clouds recoloured (sky_recolor.py)
 
 
 def unity_sky(w, strength=1.0, rot_z=0.0):
@@ -1204,6 +1210,10 @@ def park_carts_at(E, targets, search=(1, 4000, 8)):
     for c in ("Cart_A", "Cart_B"):
         o = E.M.get(c)
         if o:
+            # Follow Path adds the path position ON TOP of the object's own transform, so clear
+            # the previous parking first or every re-run pushes the carts further off the island.
+            o.location = (0, 0, 0)
+            o.rotation_euler = (0, 0, 0)
             for k in o.constraints:
                 if k.type == 'FOLLOW_PATH':
                     k.mute = False
@@ -1290,7 +1300,7 @@ def ivory_white_cat(E, color=(0.86, 0.72, 0.50)):
 
 
 # Per-scene colour grade (vivid, pastel "storybook" look). Leaves asset materials untouched.
-GRADE = {"sat": 1.3, "val": 1.0, "bright": 0.0, "contrast": 6.0, "bloom": 0.5, "bloom_thr": 0.8}
+GRADE = {"sat": 1.05, "val": 1.0, "bright": 0.0, "contrast": 6.0, "bloom": 0.5, "bloom_thr": 0.8}
 
 
 def grade(E, **kw):

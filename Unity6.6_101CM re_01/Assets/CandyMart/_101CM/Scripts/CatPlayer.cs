@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -26,6 +26,8 @@ public class CatPlayer : MonoBehaviour
 
     public CatVisual visual;
     public bool InputEnabled { get; set; } = true;
+    /// <summary>엔딩 연출용 자동 이동 방향(월드, 길이 0~1). 값이 있으면 키보드 대신 이 방향으로 달린다.</summary>
+    public Vector3? AutoMove { get; set; }
     public int FollowerCount => followers.Count;
     public Food NearbyFood { get; private set; }
     public LostKitten NearbyKitten { get; private set; }
@@ -110,6 +112,7 @@ public class CatPlayer : MonoBehaviour
             right = Vector3.Cross(Vector3.up, fwd);
         }
         moveDir = Vector3.ClampMagnitude(fwd * input.y + right * input.x, 1f);
+        if (AutoMove.HasValue) moveDir = Vector3.ClampMagnitude(AutoMove.Value, 1f);
 
         if (moveDir.sqrMagnitude > 0.01f)
         {
@@ -388,8 +391,11 @@ public class CatPlayer : MonoBehaviour
                 if (c.attachedRigidbody) continue;   // 카트·빗자루·굴러다니는 음식·무너진 상자 등 움직이는 물체는 제외
                 if (Physics.ComputePenetration(body, pos, f.transform.rotation, c, c.transform.position, c.transform.rotation, out var dir, out var dist))
                 {
+                    // Resolve support height separately. Sloped floor normals must not
+                    // become a full-strength sideways shove at platform seams.
+                    if (dir.y > 0.5f) continue;
                     dir.y = 0f;
-                    if (dir.sqrMagnitude < 1e-4f) continue;   // 바닥(위로 밀어내는 경우)은 무시
+                    if (dir.sqrMagnitude < 1e-4f) continue;
                     pos += dir.normalized * dist;
                     moved = true;
                 }
@@ -397,6 +403,30 @@ public class CatPlayer : MonoBehaviour
             if (!moved) break;
         }
         return pos;
+    }
+
+    static readonly RaycastHit[] groundBuf = new RaycastHit[8];
+    const float KittenStepUp = 0.35f;   // 이보다 높은 단(상자·매대)은 올라타지 않음
+
+    /// <summary>
+    /// 행렬 고양이의 발 높이: 경로 높이 근처(디딤돌·광장 단차 정도)의 실제 바닥에 맞춘다.
+    /// 경로는 주인공 발 높이로만 기록되므로, 옆으로 밀려난 고양이가 디딤돌 속에 파묻히던 문제 수정.
+    /// </summary>
+    float GroundUnder(Vector3 pos, float trailY)
+    {
+        Vector3 from = new Vector3(pos.x, trailY + KittenStepUp + 0.05f, pos.z);
+        int n = Physics.RaycastNonAlloc(from, Vector3.down, groundBuf, KittenStepUp + 0.6f, ~(1 << 2), QueryTriggerInteraction.Ignore);
+        float best = float.NegativeInfinity;
+        for (int i = 0; i < n; i++)
+        {
+            if (groundBuf[i].normal.y < 0.5f) continue;
+            var rb = groundBuf[i].collider.attachedRigidbody;
+            if (rb && !rb.isKinematic) continue;          // 굴러다니는 음식·무너진 상자 위로는 안 올라탐
+            if (rb && rb.GetComponent<ShoppingCart>()) continue;
+            if (groundBuf[i].point.y > best) best = groundBuf[i].point.y;
+        }
+        // Return actual support height for collision queries; smooth only the final pose.
+        return float.IsNegativeInfinity(best) ? trailY : best;
     }
 
     static Vector3 PushOut(Vector3 pos, Vector3 other, float minDist)
@@ -423,7 +453,10 @@ public class CatPlayer : MonoBehaviour
     void RecordPath()
     {
         Vector3 p = TrailPoint();
-        if ((p - path[0]).sqrMagnitude < PathStep * PathStep) return;
+        Vector3 horizontal = p - path[0];
+        horizontal.y = 0f;
+        // Vertical settling must not consume distance in the following line.
+        if (horizontal.sqrMagnitude < PathStep * PathStep) return;
         path.Insert(0, p);
         int max = Mathf.CeilToInt((firstGap + spacing * (followers.Count + 2)) / PathStep) + 10;
         if (path.Count > max) path.RemoveRange(max, path.Count - max);
@@ -435,10 +468,12 @@ public class CatPlayer : MonoBehaviour
         for (int i = 0; i < path.Count; i++)
         {
             Vector3 cur = path[i];
-            float seg = Vector3.Distance(prev, cur);
+            Vector3 delta = prev - cur;
+            delta.y = 0f;
+            float seg = delta.magnitude;
             if (seg >= dist && seg > 1e-4f)
             {
-                dir = (prev - cur) / seg;
+                dir = delta / seg;
                 return Vector3.Lerp(prev, cur, dist / seg);
             }
             dist -= seg;
@@ -451,16 +486,21 @@ public class CatPlayer : MonoBehaviour
 
     void UpdateFollowers(float speed01)
     {
-        float k = 1f - Mathf.Exp(-18f * Time.deltaTime);
+        float heightBlend = 1f - Mathf.Exp(-30f * Time.deltaTime);
         for (int i = 0; i < followers.Count; i++)
         {
             var f = followers[i];
             if (!f) continue;
             Vector3 target = SampleTrail(firstGap + spacing * i, out var dir);
-            Vector3 pos = Vector3.Lerp(f.transform.position, target, k);
-            pos = Separate(pos, i);
-            // 목표 지점과 멀리 떨어져 있으면(빗자루에 쓸림·리스폰 등) 벽에 걸리지 않게 통과해서 따라잡게 둔다
+            // Sampling already gives a continuous position at the configured gap.
+            // Lerp in world space cuts corners and adds a speed-dependent trailing gap.
+            Vector3 pos = Separate(target, i);
+            pos.y = GroundUnder(pos, target.y);
+            // Find the supporting surface BEFORE checking walls, so a step is not
+            // mistaken for a wall while the kitten's old height is still below it.
             if ((target - pos).sqrMagnitude < 1.5f * 1.5f) pos = PushOutOfWorld(f, pos);
+            pos.y = GroundUnder(pos, target.y);
+            pos.y = Mathf.Lerp(f.transform.position.y, pos.y, heightBlend);
             f.transform.position = pos;
             if (dir.sqrMagnitude > 0.001f)
                 f.visual.yaw = Mathf.MoveTowardsAngle(f.visual.yaw, Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg, 720f * Time.deltaTime);
@@ -498,6 +538,123 @@ public class CatPlayer : MonoBehaviour
             if (followers[i]) followers[i].Emote(id);
             yield return new WaitForSeconds(0.06f);
         }
+    }
+
+    // ---------------- Ending ----------------
+    /// <summary>엔딩: 행렬의 고양이들이 앞에서부터 차례로 통통 튀어 주인공 몸속으로 합쳐진다.</summary>
+    public IEnumerator MergeFollowers()
+    {
+        var list = new List<Follower>(followers);
+        followers.Clear();
+        float gap = list.Count > 0 ? Mathf.Clamp(1.4f / list.Count, 0.05f, 0.14f) : 0f;
+        foreach (var f in list)
+        {
+            if (f) StartCoroutine(FlyIntoMe(f));
+            yield return new WaitForSeconds(gap);
+        }
+        yield return new WaitForSeconds(0.55f);
+    }
+
+    IEnumerator FlyIntoMe(Follower f)
+    {
+        f.enabled = false;   // 등장 팝 스케일 중지
+        if (f.body) f.body.enabled = false;
+        f.visual.Hop();
+        Vector3 a = f.transform.position;
+        float s0 = f.transform.localScale.x, t = 0f;
+        const float dur = 0.5f;
+        while (t < dur && f)
+        {
+            t += Time.deltaTime;
+            float n = Mathf.Clamp01(t / dur);
+            Vector3 b = transform.position + Vector3.up * 0.55f;
+            Vector3 to = b - f.transform.position; to.y = 0f;
+            if (to.sqrMagnitude > 0.001f) f.visual.yaw = Mathf.Atan2(to.x, to.z) * Mathf.Rad2Deg;
+            f.transform.position = Vector3.Lerp(a, b, n * n) + Vector3.up * Mathf.Sin(n * Mathf.PI) * 1.1f;
+            f.transform.localScale = Vector3.one * s0 * (1f - n * n * 0.85f);
+            yield return null;
+        }
+        if (f) Destroy(f.gameObject);
+        visual.Squash(0.45f);
+        GameAudio.Eat();
+    }
+
+    /// <summary>엔딩: 주인공이 무지개 젤리 고양이로 변신 (Resources/RainbowKittenModel, 지금 모델 키에 맞춤).</summary>
+    public void BecomeRainbow()
+    {
+        var prefab = Resources.Load<GameObject>("RainbowKittenModel");
+        if (!prefab) return;
+        float oldH = VisibleHeight();
+        visual.UseModel(prefab);   // 기존 렌더러는 모두 꺼지고 Model이 새로 붙음
+        visual.tinted = new Renderer[0];   // 무지개 색 그대로 (진행도 색 덮어쓰기 없음)
+        Transform model = null;
+        foreach (Transform c in visual.transform) if (c.name == "Model" && c.gameObject.activeSelf) model = c;   // 마지막에 붙은 것
+        float newH = VisibleHeight();
+        if (model && oldH > 0.01f && newH > 0.01f) model.localScale *= oldH / newH;
+        // (변신 후 주변 반짝이 파티클은 사용자 요청으로 뺌 — 몸 발광과 빛만 남김)
+        visual.Squash(1f);
+        visual.PlayEmote(3);
+        if (model) StartCoroutine(RainbowGrowAndGlow(model));
+    }
+
+    [Header("Ending")]
+    public float rainbowScale = 1.4f;       // 변신 후 몸 크기 배율
+    public float rainbowGlow = 0.9f;        // 몸이 스스로 빛나는 세기 (자기 색으로 발광)
+    public float rainbowLight = 2.2f;       // 주변을 비추는 빛 세기
+
+    /// <summary>변신: 톡 튀듯 커지고(살짝 넘쳤다 돌아옴), 몸이 자기 무지개색으로 은은하게 빛나며 숨쉬듯 맥동.</summary>
+    IEnumerator RainbowGrowAndGlow(Transform model)
+    {
+        // 무지개 모델 재질에 발광 켜기 (모델 전용 인스턴스 재질이라 원본 에셋은 안 바뀜)
+        var mats = new List<Material>();
+        foreach (var r in model.GetComponentsInChildren<Renderer>())
+            foreach (var m in r.materials)
+            {
+                if (!m.HasProperty("_EmissionColor")) continue;
+                var baseTex = m.HasProperty("_BaseMap") ? m.GetTexture("_BaseMap") : null;
+                if (baseTex && m.HasProperty("_EmissionMap")) m.SetTexture("_EmissionMap", baseTex);
+                m.EnableKeyword("_EMISSION");
+                m.globalIlluminationFlags = MaterialGlobalIlluminationFlags.RealtimeEmissive;
+                mats.Add(m);
+            }
+
+        var lightGo = new GameObject("RainbowGlowLight");
+        lightGo.transform.SetParent(transform, false);
+        lightGo.transform.localPosition = new Vector3(0f, 0.8f, 0f);
+        var light = lightGo.AddComponent<Light>();
+        light.type = LightType.Point;
+        light.range = 4.5f;
+        light.shadows = LightShadows.None;
+        light.color = new Color(1f, 0.97f, 0.92f);
+
+        float s0 = visual.baseScale, s1 = s0 * rainbowScale, t = 0f;
+        const float growDur = 0.7f;
+        while (true)
+        {
+            t += Time.deltaTime;
+            if (t <= growDur) visual.baseScale = Mathf.LerpUnclamped(s0, s1, Ease.OutBack(t / growDur));
+            else visual.baseScale = s1;
+            float on = Mathf.Clamp01(t / growDur);
+            float pulse = 0.8f + 0.2f * Mathf.Sin(Time.time * 3.2f);
+            Color e = Color.white * (rainbowGlow * on * pulse);
+            foreach (var m in mats) if (m) m.SetColor("_EmissionColor", e);
+            light.intensity = rainbowLight * on * pulse;
+            // 빛 색이 아주 천천히 무지개를 돌되 거의 흰색에 가깝게 (분홍 후광처럼 보이지 않게)
+            light.color = Color.Lerp(Color.white, Color.HSVToRGB(Mathf.Repeat(Time.time * 0.15f, 1f), 0.6f, 1f), 0.25f);
+            yield return null;
+        }
+    }
+
+    float VisibleHeight()
+    {
+        bool any = false;
+        Bounds b = default;
+        foreach (var r in visual.GetComponentsInChildren<Renderer>())
+        {
+            if (!r.enabled || r is ParticleSystemRenderer) continue;
+            if (!any) { b = r.bounds; any = true; } else b.Encapsulate(r.bounds);
+        }
+        return any ? b.size.y : 0f;
     }
 
     public void StartCelebration()

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
@@ -37,6 +37,9 @@ public class GameManager : MonoBehaviour
     {
         I = this;
         Time.timeScale = 1f;
+        EndingSequence.ResetState();
+        StartSequence.ResetState();
+        if (!GetComponent<ShopWindowFlicker>()) gameObject.AddComponent<ShopWindowFlicker>();
         onTitle = !skipTitle;
         skipTitle = false;
         // 씬에 GameFlowUI가 없으면 자동으로 붙임 (이미지 지정하려면 씬의 GameManager에 미리 붙여두기)
@@ -62,15 +65,51 @@ public class GameManager : MonoBehaviour
         onTitle = false;
         startTime = Time.time;
         CameraFollow.SetCursorLocked(true);
+        if (player) StartCoroutine(StartSequence.Play(this, player));   // 신나서 뛰어 들어오는 시작 연출
     }
 
     void Update()
     {
         var kb = Keyboard.current;
+#if UNITY_EDITOR
+        if (kb != null && kb.f9Key.wasPressedThisFrame) DebugSkipToEnding();
+#endif
         if (kb == null || !kb.escapeKey.wasPressedThisFrame) return;
         if (GameFlowUI.I && GameFlowUI.I.CloseGuide()) return;   // 게임 설명이 떠 있으면 그것부터 닫기
         if (!won && !onTitle) SetMenu(!menuOpen);
     }
+
+#if UNITY_EDITOR
+    /// <summary>
+    /// 테스트용 F9: 엔딩 직전으로 건너뛰기. 남은 음식을 전부 먹어(행렬 생김) 마지막 1CM를 나오게 하고,
+    /// 고양이를 그 옆에 세운다. E로 마지막 1CM를 먹으면 엔딩 연출이 시작된다. Unity 에디터에서만 동작한다.
+    /// </summary>
+    void DebugSkipToEnding()
+    {
+        if (won || lastCollected || !player) return;
+        if (menuOpen) SetMenu(false);
+        if (onTitle) BeginGame();
+
+        foreach (var f in new System.Collections.Generic.List<Food>(Food.All))
+            if (f && f.CanBeEaten && f.type != FoodType.LastPiece) f.Eat(player);
+        if (rawCm < Goal - 1) { rawCm = Goal - 1; player.SetProgress(Progress); }
+        CheckLastPiece();
+
+        Food last = null;
+        foreach (var f in Food.All) if (f && f.type == FoodType.LastPiece) last = f;
+        Vector3 lp = last ? last.transform.position : lastPieceSpawn ? lastPieceSpawn.position : Vector3.zero;
+        Vector3 back = new Vector3(lp.x, 0f, lp.z).normalized;   // 섬 중심 쪽으로 1.6m 물러선 자리
+        if (back.sqrMagnitude < 0.01f) back = Vector3.back;
+        Vector3 pos = lp - back * 1.6f + Vector3.up * 0.2f;
+        var rb = player.GetComponent<Rigidbody>();
+        if (rb) { rb.position = pos; rb.linearVelocity = Vector3.zero; }
+        player.transform.position = pos;
+        player.visual.yaw = Mathf.Atan2(back.x, back.z) * Mathf.Rad2Deg;
+        var cf = FindAnyObjectByType<CameraFollow>();
+        if (cf) cf.yaw = player.visual.yaw;
+        Debug.Log("[F9] 엔딩 직전 — E로 마지막 1CM(무지개 고양이)를 먹으면 엔딩 연출 시작");
+    }
+#endif
 
     public void SetMenu(bool open)
     {
@@ -88,6 +127,7 @@ public class GameManager : MonoBehaviour
             if (exitGate) exitGate.Open();
             p.SetProgress(1f);
             p.Emote(3);
+            StartCoroutine(EndingSequence.Play(this, p));   // 출구까지 자동으로 달려가 합체 → 무지개 고양이 → 클리어
             return;
         }
 
@@ -111,7 +151,6 @@ public class GameManager : MonoBehaviour
         Vector3 pos = lastPieceSpawn ? lastPieceSpawn.position : Vector3.zero;
         Food.Create(FoodType.LastPiece, pos, foodRoot, false);
         CameraFollow.Shake(0.2f);
-        GameAudio.LastAppear();
     }
 
     // ---------------- Obstacles ----------------
@@ -134,7 +173,6 @@ public class GameManager : MonoBehaviour
     {
         rawCm += f.cm;
         p.SetProgress(Progress);
-        GameAudio.Rejoin();
         CheckLastPiece();
     }
 

@@ -49,6 +49,7 @@ public class SnackBoxStack : MonoBehaviour
         }
 
         CameraFollow.Shake(0.35f);
+        GameAudio.BoxPop();
         gm.player.Emote(1);
     }
 

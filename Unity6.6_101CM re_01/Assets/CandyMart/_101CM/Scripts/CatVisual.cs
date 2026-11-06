@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -94,6 +94,11 @@ public class CatVisual : MonoBehaviour
     // ---------------- Motion ----------------
     public void Squash(float amount = 1f) => squash = Mathf.Max(squash, amount);
 
+    // Independent of emote coroutines, so milestone celebrations cannot cancel eating.
+    float eatTime = -1f;
+    public Vector3 BitePoint => transform.TransformPoint(new Vector3(0f, 0.6f, 0.38f));
+    public void PlayEat() => eatTime = 0f;
+
     float hopT = -1f;
     bool hasRig;
     /// <summary>제자리 작은 점프 (감정표현 모션과 별개로 겹쳐짐).</summary>
@@ -174,6 +179,25 @@ public class CatVisual : MonoBehaviour
         if (breathOffset < 0f) breathOffset = Random.value * 10f;
         float breathe = Mathf.Sin(Time.time * 3f + breathOffset) * 0.02f;
         float sx = 1f + squash * 0.25f, sy = 1f - squash * 0.3f + breathe;
+        float eatTilt = 0f, eatBob = 0f;
+        if (eatTime >= 0f)
+        {
+            eatTime += dt;
+            const float eatDuration = 0.78f;
+            if (eatTime >= eatDuration) eatTime = -1f;
+            else
+            {
+                // Lean into the incoming food, then chew three times with a soft settle.
+                float reach = Mathf.Sin(Mathf.Clamp01(eatTime / 0.36f) * Mathf.PI);
+                float chewPhase = Mathf.Clamp01((eatTime - 0.30f) / 0.48f);
+                float chew = Mathf.Sin(chewPhase * Mathf.PI * 3f);
+                chew = chew * chew * Mathf.Sin(chewPhase * Mathf.PI);
+                eatTilt = reach * 12f - chew * 5f;
+                eatBob = chew * 0.055f;
+                sx *= 1f + reach * 0.04f + chew * 0.09f;
+                sy *= 1f - reach * 0.05f - chew * 0.08f;
+            }
+        }
         transform.localScale = new Vector3(sx, sy, sx) * baseScale;
         float hopY = 0f;
         if (hopT >= 0f)
@@ -183,11 +207,11 @@ public class CatVisual : MonoBehaviour
             if (hopT >= hopDur) hopT = -1f;
             else hopY = Mathf.Sin(hopT / hopDur * Mathf.PI) * 0.7f;
         }
-        var rot = Quaternion.Euler(emoteTiltX, yaw + emoteSpin, emoteTiltZ);
+        var rot = Quaternion.Euler(emoteTiltX + eatTilt, yaw + emoteSpin, emoteTiltZ);
         // 기울기는 발이 아니라 몸통 가운데를 축으로 (위쪽이 크게 휘둘리지 않게)
         Vector3 pivot = Vector3.up * (0.5f * baseScale);
         Vector3 tiltOffset = pivot - rot * pivot;
-        transform.localPosition = new Vector3(0f, (bob + emoteY + hopY) * baseScale, 0f) + tiltOffset;
+        transform.localPosition = new Vector3(0f, (bob + emoteY + hopY + eatBob) * baseScale, 0f) + tiltOffset;
         transform.localRotation = rot;
     }
 

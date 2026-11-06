@@ -14,10 +14,17 @@ public class ShoppingCart : MonoBehaviour
     public float pauseAtEnds = 0.8f;
     public int startIndex;
     public Transform visual;
+    [Tooltip("바닥(광장 단차 등) 높이를 따라 오르내림. 바퀴가 바닥에 박히거나 뜨지 않게")]
+    public bool followGround = true;
 
     Rigidbody rb;
     int target, dir = 1;
     float pauseUntil, rattle;
+    float wheelOffset;   // 루트 → 바퀴 바닥까지의 높이 (Start에서 측정)
+    float groundY;
+    bool groundInit;
+    Vector2 footprint;   // 바퀴 자리 반폭 (앞뒤, 좌우)
+    static readonly RaycastHit[] hitBuf = new RaycastHit[16];
 
     void Awake()
     {
@@ -26,11 +33,58 @@ public class ShoppingCart : MonoBehaviour
         rb.interpolation = RigidbodyInterpolation.Interpolate;
     }
 
+    void MeasureWheels()
+    {
+        var rs = GetComponentsInChildren<Renderer>();
+        if (rs.Length == 0) return;
+        var b = rs[0].bounds;
+        foreach (var r in rs) b.Encapsulate(r.bounds);
+        wheelOffset = b.min.y - transform.position.y;
+        var local = transform.InverseTransformVector(b.extents);
+        footprint = new Vector2(Mathf.Abs(local.z) * 0.6f, Mathf.Abs(local.x) * 0.6f);
+    }
+
+    /// <summary>바퀴 네 자리 아래 바닥 중 가장 높은 곳 (자기 자신·트리거·고양이·굴러다니는 물체는 무시).</summary>
+    float SampleGround(Vector3 pos, Quaternion rot)
+    {
+        float best = float.NegativeInfinity;
+        Vector3 fwd = rot * Vector3.forward, right = rot * Vector3.right;
+        for (int k = 0; k < 5; k++)
+        {
+            Vector3 off = k == 0 ? Vector3.zero : fwd * (k < 3 ? footprint.x : -footprint.x) + right * (k % 2 == 1 ? footprint.y : -footprint.y);
+            Vector3 from = new Vector3(pos.x, pos.y + wheelOffset + 1.2f, pos.z) + off;
+            int n = Physics.RaycastNonAlloc(from, Vector3.down, hitBuf, 3f, ~(1 << 2), QueryTriggerInteraction.Ignore);
+            for (int i = 0; i < n; i++)
+            {
+                var c = hitBuf[i].collider;
+                if (c.transform.IsChildOf(transform)) continue;
+                if (c.attachedRigidbody && !c.attachedRigidbody.isKinematic) continue;
+                if (c.attachedRigidbody && c.attachedRigidbody.GetComponent<ShoppingCart>()) continue;
+                if (hitBuf[i].point.y > best) best = hitBuf[i].point.y;
+            }
+        }
+        return best;
+    }
+
+    Vector3 OnGround(Vector3 pos, Quaternion rot)
+    {
+        if (!followGround) return pos;
+        float g = SampleGround(pos, rot);
+        if (float.IsNegativeInfinity(g)) return pos;
+        float want = g - wheelOffset;
+        groundY = groundInit ? Mathf.MoveTowards(groundY, want, 1.5f * Time.fixedDeltaTime) : want;   // 단차를 부드럽게 오르내림
+        groundInit = true;
+        pos.y = groundY;
+        return pos;
+    }
+
     void Start()
     {
         if (waypoints == null || waypoints.Length < 2) return;
         startIndex = Mathf.Clamp(startIndex, 0, waypoints.Length - 1);
         rb.position = transform.position = waypoints[startIndex];
+        MeasureWheels();
+        rb.position = transform.position = OnGround(waypoints[startIndex], transform.rotation);
         target = startIndex + 1;
         if (target >= waypoints.Length) { target = loop ? 0 : startIndex - 1; if (!loop) dir = -1; }
     }
@@ -40,18 +94,20 @@ public class ShoppingCart : MonoBehaviour
         if (waypoints == null || waypoints.Length < 2) return;
         if (Time.time < pauseUntil) return;
 
+        // 경로는 수평(xz)으로만 따라가고, 높이는 바닥을 따른다
         Vector3 pos = rb.position, goal = waypoints[target];
-        Vector3 to = goal - pos;
+        Vector3 to = goal - pos; to.y = 0f;
         float step = speed * Time.fixedDeltaTime;
         if (to.magnitude <= step)
         {
-            rb.MovePosition(goal);
+            rb.MovePosition(OnGround(new Vector3(goal.x, pos.y, goal.z), rb.rotation));
             Advance();
             return;
         }
         Vector3 d = to.normalized;
-        rb.MovePosition(pos + d * step);
-        rb.MoveRotation(Quaternion.RotateTowards(rb.rotation, Quaternion.LookRotation(d), 300f * Time.fixedDeltaTime));
+        var rot = Quaternion.RotateTowards(rb.rotation, Quaternion.LookRotation(d), 300f * Time.fixedDeltaTime);
+        rb.MovePosition(OnGround(pos + d * step, rot));
+        rb.MoveRotation(rot);
     }
 
     void Advance()
@@ -84,7 +140,7 @@ public class ShoppingCart : MonoBehaviour
     void Hit(Collider other)
     {
         var gm = GameManager.I;
-        if (!gm || !gm.player || gm.IsWon) return;
+        if (!gm || !gm.player || gm.IsWon || EndingSequence.Running) return;
         if (other.GetComponentInParent<LostKitten>()) return;
 
         if (other.GetComponentInParent<CatPlayer>())

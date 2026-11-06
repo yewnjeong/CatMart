@@ -145,7 +145,7 @@ L.write_fcurves(gl, "EP4_GlowE", {("energy", 0): [(1, 0), (APPEAR, 0), (APPEAR +
 sc = E.sc
 world, ramp, bg, fac = L.night_world("W_EP4_SunsetNight")
 sc.world = world
-L.grade(E, sat=1.35, bloom=0.7, bloom_thr=0.6)
+L.grade(E, sat=1.1, bloom=0.7, bloom_thr=0.6)
 el = ramp.color_ramp.elements   # 0 ground, 1 horizon, 2 zenith
 pal = [
     (1,     (0.45, 0.33, 0.38), (1.00, 0.52, 0.30), (0.40, 0.38, 0.75)),
